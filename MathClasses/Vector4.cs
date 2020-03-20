@@ -78,9 +78,13 @@ namespace MathClasses
         }
 
         //Normalize
-        public Vector4 Normalize()
+        public void Normalize()
         {
-            return this / Magnitude();
+            float mag = Magnitude();
+            x /= mag;
+            y /= mag;
+            z /= mag;
+            w /= mag;
         }
 
     }

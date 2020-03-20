@@ -36,16 +36,54 @@ namespace MathClasses
             m13 = _m13; m14 = _m14; m15 = _m15; m16 = _m16;
         }
 
-        public static Vector4 operator *(Vector4 a, Matrix4 b) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
+        public static Vector4 operator *(Vector4 vec, Matrix4 b) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
         {
-            
+            b.m1 *= vec.x;
+            b.m5 *= vec.y;
+            b.m9 *= vec.z;
+            b.m13 *= vec.w;
 
-            return new Vector4(0, 0, 0, 0);
+            b.m2 *= vec.x;
+            b.m6 *= vec.y;
+            b.m9 *= vec.z;
+            b.m14 *= vec.w;
+
+            b.m3 *= vec.x;
+            b.m7 *= vec.y;
+            b.m10 *= vec.z;
+            b.m15 *= vec.w;
+
+            b.m4 *= vec.x;
+            b.m8 *= vec.y;
+            b.m11 *= vec.z;
+            b.m16 *= vec.w;
+
+            return new Vector4((b.m1 + b.m5 + b.m9 + b.m13), (b.m2 + b.m6 + b.m10 + b.m14), (b.m3 + b.m7 + b.m11 + b.m15), (b.m4 + b.m8 + b.m12 + b.m16));
         }
 
-        public static Vector4 operator *(Matrix4 b, Vector4 a) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
+        public static Vector4 operator *(Matrix4 b, Vector4 vec) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
         {
-            return new Vector4(0, 0, 0, 0);
+            b.m1 *= vec.x;
+            b.m5 *= vec.y;
+            b.m9 *= vec.z;
+            b.m13 *= vec.w;
+
+            b.m2 *= vec.x;
+            b.m6 *= vec.y;
+            b.m10 *= vec.z;
+            b.m14 *= vec.w;
+
+            b.m3 *= vec.x;
+            b.m7 *= vec.y;
+            b.m11 *= vec.z;
+            b.m15 *= vec.w;
+
+            b.m4 *= vec.x;
+            b.m8 *= vec.y;
+            b.m12 *= vec.z;
+            b.m16 *= vec.w;
+
+            return new Vector4((b.m1 + b.m5 + b.m9 + b.m13),(b.m2 + b.m6 + b.m10 + b.m14),(b.m3 + b.m7 + b.m11 + b.m15),(b.m4 + b.m8 + b.m12 + b.m16));
         }
 
         //Multiplication 

@@ -66,14 +66,38 @@ namespace MathClasses
             return mat;
         }
 
-        public static Vector3 operator *(Vector3 a, Matrix3 b) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
+        public static Vector3 operator *(Vector3 vec, Matrix3 b) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
         {
-            return new Vector3(0,0,0);
+            b.m1 *= vec.x;
+            b.m4 *= vec.y;
+            b.m7 *= vec.z;
+
+            b.m2 *= vec.x;
+            b.m5 *= vec.y;
+            b.m8 *= vec.z;
+
+            b.m3 *= vec.x;
+            b.m6 *= vec.y;
+            b.m9 *= vec.z;
+
+            return new Vector3(b.m1 + b.m4 + b.m7, b.m2 + b.m5 + b.m8, b.m3 + b.m6 + b.m9);
         }
 
-        public static Vector3 operator *(Matrix3 b, Vector3 a) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
+        public static Vector3 operator *(Matrix3 b, Vector3 vec) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
         {
-            return new Vector3(0, 0, 0);
+            b.m1 *= vec.x;
+            b.m4 *= vec.y;
+            b.m7 *= vec.z;
+
+            b.m2 *= vec.x;
+            b.m5 *= vec.y;
+            b.m8 *= vec.z;
+
+            b.m3 *= vec.x;
+            b.m6 *= vec.y;
+            b.m9 *= vec.z;
+
+            return new Vector3(b.m1 + b.m4 + b.m7, b.m2 + b.m5 + b.m8, b.m3 + b.m6 + b.m9);
         }
 
         public void SetRotateX(float radians)

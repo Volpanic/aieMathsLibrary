@@ -76,13 +76,16 @@ namespace MathClasses
         //Magnitude
         public float Magnitude()
         {
-            return (float)(Math.Sqrt((x * x) + (y * y) + (z * z)));
+            return (float)Math.Sqrt(x * x + y * y + z * z);
         }
 
         //Normalize
-        public Vector3 Normalize()
+        public void Normalize()
         {
-            return this / Magnitude();
+            float mag = Magnitude();
+            x /= mag;
+            y /= mag;
+            z /= mag;
         }
 
     }
