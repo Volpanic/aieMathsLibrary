@@ -17,5 +17,82 @@ namespace MathClasses
             m7 = 0; m8 = 0; m9 = 1;
         }
 
+        public Matrix3(float _m1 = 0, float _m2 = 0, float _m3 = 0, float _m4 = 0, float _m5 = 0, float _m6 = 0, float _m7 = 0, float _m8 = 0, float _m9 = 0)
+        {
+            m1 = _m1; m2 = _m2; m3 = _m3;
+            m4 = _m4; m5 = _m5; m6 = _m6;
+            m7 = _m7; m8 = _m8; m9 = _m9;
+        }
+
+        public void Set(float _m1 = 0, float _m2 = 0, float _m3 = 0, float _m4 = 0, float _m5 = 0, float _m6 = 0, float _m7 = 0, float _m8 = 0, float _m9 = 0)
+        {
+            m1 = _m1; m2 = _m2; m3 = _m3;
+            m4 = _m4; m5 = _m5; m6 = _m6;
+            m7 = _m7; m8 = _m8; m9 = _m9;
+        }
+
+        public void SetScale(float _x, float _y , float _z)
+        {
+            m1 = _x; m2 = 0; m3 = 0;
+            m4 = 0; m5 = _y; m6 = 0;
+            m7 = 0; m8 = 0; m9 = _z;
+        }
+
+        public void SetScale(Vector3 sca)
+        {
+            m1 = sca.x; m2 = 0; m3 = 0;
+            m4 = 0; m5 = sca.y; m6 = 0;
+            m7 = 0; m8 = 0; m9 = sca.z;
+        }
+
+        //Multiplication 
+        public static Matrix3 operator *(Matrix3 a, Matrix3 b) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
+        {
+            Matrix3 mat = new Matrix3();
+
+            mat.m1 = a.m1 * b.m1;
+            mat.m2 = a.m2 * b.m2;
+            mat.m3 = a.m3 * b.m3;
+            mat.m4 = a.m4 * b.m4;
+            mat.m5 = a.m5 * b.m5;
+            mat.m6 = a.m6 * b.m6;
+            mat.m7 = a.m7 * b.m7;
+            mat.m8 = a.m8 * b.m8;
+            mat.m9 = a.m9 * b.m9;
+
+            return mat;
+        }
+
+        public static Vector3 operator *(Vector3 a, Matrix3 b) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
+        {
+            return new Vector3(0,0,0);
+        }
+
+        public static Vector3 operator *(Matrix3 b, Vector3 a) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
+        {
+            return new Vector3(0, 0, 0);
+        }
+
+        public void SetRotateX(float radians)
+        {
+            Set(1, 0, 0,
+                0, (float)Math.Cos(radians), (float)Math.Sin(radians),
+                0, (float)-Math.Sin(radians), (float)Math.Cos(radians));
+        }
+
+        public void SetRotateY(float radians)
+        {
+            Set((float)Math.Cos(radians), 0, (float)-Math.Sin(radians),
+                0,1,0,
+                (float)Math.Sin(radians), 0, (float)Math.Cos(radians));
+        }
+
+        public void SetRotateZ(float radians)
+        {
+            Set((float)Math.Cos(radians), (float)Math.Sin(radians), 0,
+                (float)-Math.Sin(radians), (float)Math.Cos(radians), 0,
+                0, 0, 1);
+        }
+
     }
 }

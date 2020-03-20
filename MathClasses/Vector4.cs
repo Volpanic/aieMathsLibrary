@@ -67,7 +67,7 @@ namespace MathClasses
         //Cross
         public Vector4 Cross(Vector4 comp)
         {
-            Vector3 temp = new Vector3(comp.x, comp.y, comp.z).Cross(new Vector3(comp.x,comp.y,comp.z));
+            Vector3 temp = new Vector3(x, y, z).Cross(new Vector3(comp.x,comp.y,comp.z));
             return new Vector4(temp.x,temp.y,temp.z,0);
         }
 
@@ -75,6 +75,12 @@ namespace MathClasses
         public float Magnitude()
         {
             return (float)(Math.Sqrt((x * x) + (y * y) + (z * z) + (w * w)));
+        }
+
+        //Normalize
+        public Vector4 Normalize()
+        {
+            return this / Magnitude();
         }
 
     }
