@@ -329,9 +329,13 @@ namespace UnitTestProject
 
             Matrix3 m3d = m3a * m3c;
 
+            Console.WriteLine($"Is: {m3d.m2} , Should: 0.129707172513f");
+
             Assert.IsTrue(compare(m3d,
                 new Matrix3(-0.981004655361f, 0.129707172513f, 0.14424264431f, 0.193984255195f, 0.655946731567f, 0.729454636574f, 0, 0.743579149246f, -0.668647944927f)));
         }
+
+
 
         [TestMethod]
         public void Matrix4Multiply()

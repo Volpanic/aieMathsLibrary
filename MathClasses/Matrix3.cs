@@ -46,19 +46,22 @@ namespace MathClasses
         }
 
         //Multiplication 
-        public static Matrix3 operator *(Matrix3 a, Matrix3 b) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
+        public static Matrix3 operator *(Matrix3 b, Matrix3 a) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
         {
             Matrix3 mat = new Matrix3();
+            float n1 = (a.m1 * b.m1) + (a.m2 * b.m4) + (a.m3 * b.m7);
+            float n2 = (a.m1 * b.m2) + (a.m2 * b.m5) + (a.m3 * b.m8);
+            float n3 = (a.m1 * b.m3) + (a.m2 * b.m6) + (a.m3 * b.m9);
 
-            mat.m1 = a.m1 * b.m1;
-            mat.m2 = a.m2 * b.m2;
-            mat.m3 = a.m3 * b.m3;
-            mat.m4 = a.m4 * b.m4;
-            mat.m5 = a.m5 * b.m5;
-            mat.m6 = a.m6 * b.m6;
-            mat.m7 = a.m7 * b.m7;
-            mat.m8 = a.m8 * b.m8;
-            mat.m9 = a.m9 * b.m9;
+            float n4 = (a.m4 * b.m1) + (a.m5 * b.m4) + (a.m6 * b.m7);
+            float n5 = (a.m4 * b.m2) + (a.m5 * b.m5) + (a.m6 * b.m8);
+            float n6 = (a.m4 * b.m3) + (a.m5 * b.m6) + (a.m6 * b.m9);
+
+            float n7 = (a.m7 * b.m1) + (a.m8 * b.m4) + (a.m9 * b.m7);
+            float n8 = (a.m7 * b.m2) + (a.m8 * b.m5) + (a.m9 * b.m8);
+            float n9 = (a.m7 * b.m3) + (a.m8 * b.m6) + (a.m9 * b.m9);
+
+            mat.Set(n1,n2,n3,n4,n5,n6,n7,n8,n9);
 
             return mat;
         }

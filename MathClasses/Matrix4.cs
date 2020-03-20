@@ -38,6 +38,8 @@ namespace MathClasses
 
         public static Vector4 operator *(Vector4 a, Matrix4 b) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
         {
+            
+
             return new Vector4(0, 0, 0, 0);
         }
 
@@ -47,9 +49,32 @@ namespace MathClasses
         }
 
         //Multiplication 
-        public static Matrix4 operator *(Matrix4 a, Matrix4 b) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
+        public static Matrix4 operator *(Matrix4 b, Matrix4 a) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
         {
-            return new Matrix4();
+            Matrix4 mat = new Matrix4();
+            float n1 = (a.m1 * b.m1) + (a.m2 * b.m5) + (a.m3 * b.m9)  + (a.m4 * b.m13);
+            float n2 = (a.m1 * b.m2) + (a.m2 * b.m6) + (a.m3 * b.m10) + (a.m4 * b.m14);
+            float n3 = (a.m1 * b.m3) + (a.m2 * b.m7) + (a.m3 * b.m11) + (a.m4 * b.m15);
+            float n4 = (a.m1 * b.m4) + (a.m2 * b.m8) + (a.m3 * b.m12) + (a.m4 * b.m16);
+
+            float n5 = (a.m5 * b.m1) + (a.m6 * b.m5) + (a.m7 * b.m9) + (a.m8 * b.m13);
+            float n6 = (a.m5 * b.m2) + (a.m6 * b.m6) + (a.m7 * b.m10) + (a.m8 * b.m14);
+            float n7 = (a.m5 * b.m3) + (a.m6 * b.m7) + (a.m7 * b.m11) + (a.m8 * b.m15);
+            float n8 = (a.m5 * b.m4) + (a.m6 * b.m8) + (a.m7 * b.m12) + (a.m8 * b.m16);
+
+            float n9 = (a.m9 * b.m1) + (a.m10 * b.m5) + (a.m11 * b.m9) + (a.m12 * b.m13);
+            float n10 = (a.m9 * b.m2) + (a.m10 * b.m6) + (a.m11 * b.m10) + (a.m12 * b.m14);
+            float n11 = (a.m9 * b.m3) + (a.m10 * b.m7) + (a.m11 * b.m11) + (a.m12 * b.m15);
+            float n12 = (a.m9 * b.m4) + (a.m10 * b.m8) + (a.m11 * b.m12) + (a.m12 * b.m16);
+
+            float n13 = (a.m13 * b.m1) + (a.m14 * b.m5) + (a.m15 * b.m9) + (a.m16 * b.m13);
+            float n14 = (a.m13 * b.m2) + (a.m14 * b.m6) + (a.m15 * b.m10) + (a.m16 * b.m14);
+            float n15 = (a.m13 * b.m3) + (a.m14 * b.m7) + (a.m15 * b.m11) + (a.m16 * b.m15);
+            float n16 = (a.m13 * b.m4) + (a.m14 * b.m8) + (a.m15 * b.m12) + (a.m16 * b.m16);
+
+            mat.Set(n1, n2, n3, n4, n5, n6, n7, n8, n9,n10,n11,n12,n13,n14,n15,n16);
+
+            return mat;
         }
 
         public void SetRotateX(float radians)
