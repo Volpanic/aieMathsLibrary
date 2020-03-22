@@ -15,9 +15,12 @@ namespace Project2D.Scenes
         public int MenuTimer = 0;
         public bool MenuTran = false;
 
+        //Raylibs not really meant to use a vector class other than it's own
+        //For the menu i'm using the base vector2 class but ill use my library for the player...
+
         public TitleScene(Game _game) : base(_game)
         {
-
+           
         }
 
         public override void Update()
