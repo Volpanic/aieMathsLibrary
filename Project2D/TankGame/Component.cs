@@ -7,7 +7,7 @@ using MathClasses;
 using Raylib;
 using static Raylib.Raylib;
 
-namespace Project2D.Game
+namespace Project2D.TankGame
 {
     using MathClasses;
     public abstract class Component
@@ -37,8 +37,13 @@ namespace Project2D.Game
 
         //Abstracts
         public abstract void Create();
-        public abstract void Update();
-        public abstract void Draw();
+
+        //Virtuals
+
+        public virtual void Update() { }
+        public virtual void Draw() { }
+        public virtual void OnDestroy() { } //Called when an objects Alive is set to false (Called from the scene running the code)
+
 
         public void DrawSelf() // Default draw, draws sprite sheet cells
         {
@@ -49,7 +54,7 @@ namespace Project2D.Game
                 // new Raylib.Vector2 was the best work around i could find, i could use the basic draw class
                 // but that doesnt allow rotation and stuff
 
-                Rectangle imageRect = new Rectangle(0, 0, Dimensions.x, Dimensions.y);
+                Rectangle imageRect = new Rectangle(0, 0, Dimensions.x+1, Dimensions.y);
                 DrawTexturePro(Sprite, imageRect, destRectangle, new Raylib.Vector2(Origin.x, Origin.y), Rotation, Color.WHITE);
             }
             else
@@ -62,7 +67,7 @@ namespace Project2D.Game
                     ImageIndex = 0;
                 }
 
-                Rectangle imageRect = new Rectangle(sheetXPos,0,Dimensions.x,Dimensions.y);
+                Rectangle imageRect = new Rectangle(sheetXPos,0,Dimensions.x+1,Dimensions.y);
                 DrawTexturePro(Sprite,imageRect,destRectangle, new Raylib.Vector2(Origin.x,Origin.y),Rotation,Color.WHITE);
             }
         }

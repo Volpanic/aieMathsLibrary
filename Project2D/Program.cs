@@ -20,7 +20,7 @@ namespace Project2D
         {
             Game game = new Game();
 
-            InitWindow(GameWidth*GameZoom, GameHeight*GameZoom, "(...)");
+            InitWindow(GameWidth*GameZoom, GameHeight*GameZoom, "...");
             SetTargetFPS(60);
 
             RenderTexture2D AppSurface = LoadRenderTexture(GameWidth, GameHeight);

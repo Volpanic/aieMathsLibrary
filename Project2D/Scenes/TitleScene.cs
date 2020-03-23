@@ -31,7 +31,7 @@ namespace Project2D.Scenes
             {
                 MenuTran = true;
                 MenuTimer = 0;
-                game.CurrentGameScene = new TitleScene(game);
+                game.CurrentGameScene = new GameScene(game);
             }
 
             if(MenuTran)
