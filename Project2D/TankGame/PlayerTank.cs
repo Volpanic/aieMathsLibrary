@@ -16,11 +16,28 @@ namespace Project2D.TankGame
     {
         public Vector2 Velocity = new Vector2();
 
+        //Gun
+        public Texture2D GunSprite;
+        public Vector2 GunOrigin;
+        public float GunRotation = 0.0f;
+
+        public Vector2 MousePos { get { return new Vector2(GetMousePosition().x, GetMousePosition().y) / Program.GameZoom; } }
+
         public override void Create()
         {
             Sprite = LoadTexture(Path.Combine("Resources","Sprites","spr_tank.png")); // Set to tank sprite
             Dimensions = new Vector2(Sprite.width,Sprite.height); // Sets sprite width and height
             Origin = Dimensions / 2; // Centers the sprite
+
+            //Gun Stuff
+            GunSprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_tank_gun.png")); // Load Gun Sprite
+            GunOrigin = new Vector2(2, 3); //Set origin 
+        }
+
+        public override void OnDestroy()
+        {
+            UnloadTexture(Sprite);
+            UnloadTexture(GunSprite);
         }
 
         public override void Update()
@@ -63,11 +80,31 @@ namespace Project2D.TankGame
             }
 
             Position += Velocity;
+
+            GunUpdate();
         }
 
         public override void Draw()
         {
             DrawSelf();
+
+            GunDraw();
+        }
+
+        ////////////////
+        public void GunUpdate()
+        {
+            GunRotation = Vector2.Direction(Position,MousePos);
+        }
+
+        public void GunDraw()
+        {
+            Rectangle ImageRect = new Rectangle(0,0,GunSprite.width,GunSprite.height); // Image rectangle (Whole Image)
+            Rectangle DestRect = new Rectangle(Position.x,Position.y,ImageRect.width,ImageRect.height); // World Rect
+
+            DrawTexturePro(GunSprite,ImageRect,DestRect,new Raylib.Vector2(GunOrigin.x,GunOrigin.y),GunRotation * RAD2DEG,Color.WHITE);
+
+            DrawCircleLines((int)MousePos.x, (int)MousePos.y, 3, Color.BLACK);
         }
     }
 }

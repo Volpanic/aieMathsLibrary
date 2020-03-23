@@ -83,5 +83,17 @@ namespace MathClasses
             x /= mag;
             y /= mag;
         }
+
+        public static float Distence(Vector2 a, Vector2 b)
+        {
+            return Math.Abs((b - a).Magnitude());
+        }
+
+        public static float Direction(Vector2 a, Vector2 b)
+        {
+            Vector2 c = b - a;
+
+            return (float)Math.Atan2(c.y,c.x);
+        }
     }
 }
