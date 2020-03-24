@@ -10,6 +10,8 @@ using static Raylib.Raylib;
 namespace Project2D.TankGame
 {
     using MathClasses;
+    using Project2D.Scenes;
+
     public abstract class Component
     {
         public Texture2D Sprite;  // Sprite
@@ -22,7 +24,9 @@ namespace Project2D.TankGame
         public int ImageIndex = 0;// Decides which cell of animation to draw from a sprite sheet
         public bool Active = true;
 
-        public Component()
+        protected GameScene gameScene;
+
+        public Component(GameScene _gameScene)
         {
             //Set blanks
             Position = Vector2.Zero;
@@ -30,6 +34,8 @@ namespace Project2D.TankGame
             Origin = Vector2.Zero;
             Dimensions = Vector2.Zero;
             Scale = new Vector2(1,1);
+
+            gameScene = _gameScene;
 
             //Runs create which allows children to set sprites and stuff
             Create();

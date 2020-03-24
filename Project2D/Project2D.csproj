@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="TankGame\Component.cs" />
+    <Compile Include="TankGame\Particles\Particle.cs" />
+    <Compile Include="TankGame\PlayerBullet.cs" />
     <Compile Include="TankGame\PlayerTank.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -15,20 +15,41 @@ namespace Project2D.Scenes
     {
         public PlayerTank player;
 
+        public List<PlayerBullet> PlayerBullets = new List<PlayerBullet>();
+
         public GameScene(Game _game) : base(_game)
         {
-            player = new PlayerTank();
+            player = new PlayerTank(this);
             player.Position = new Vector2(Program.GameWidth / 2, Program.GameHeight/2);
         }
 
         public override void Update()
         {
             player.Update();
+
+            //Roll through Player Bullets updates
+            for(int i  = 0; i < PlayerBullets.Count; i++)
+            {
+                PlayerBullets[i].Update();
+
+                //Destroy if need to.
+                if(PlayerBullets[i].Active == false)
+                {
+                    PlayerBullets.RemoveAt(i);
+                    i--;
+                }
+            }
         }
 
         public override void Draw()
         {
             player.Draw();
+
+            //Roll through Player Bullets Draw
+            for (int i = 0; i < PlayerBullets.Count; i++)
+            {
+                PlayerBullets[i].Draw();
+            }
         }
     }
 }

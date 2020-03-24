@@ -11,10 +11,12 @@ using static Raylib.Raylib;
 namespace Project2D.TankGame
 {
     using MathClasses;
+    using Project2D.Scenes;
 
     public class PlayerTank : Component
     {
         public Vector2 Velocity = new Vector2();
+
 
         //Gun
         public Texture2D GunSprite;
@@ -22,6 +24,11 @@ namespace Project2D.TankGame
         public float GunRotation = 0.0f;
 
         public Vector2 MousePos { get { return new Vector2(GetMousePosition().x, GetMousePosition().y) / Program.GameZoom; } }
+
+        public PlayerTank(GameScene _gS) : base(_gS)
+        {
+
+        }
 
         public override void Create()
         {
@@ -44,12 +51,11 @@ namespace Project2D.TankGame
         {
             float rotSpeed = (float)Math.PI;
 
-            bool KeyRight = IsKeyDown(KeyboardKey.KEY_RIGHT); // Rot Right
-            bool KeyLeft = IsKeyDown(KeyboardKey.KEY_LEFT); // Rot Left
+            bool KeyRight = IsKeyDown(KeyboardKey.KEY_D); // Rot Right
+            bool KeyLeft = IsKeyDown(KeyboardKey.KEY_A); // Rot Left
 
-            bool KeyForward = IsKeyDown(KeyboardKey.KEY_Z); // Move Forward
+            bool KeyForward = IsKeyDown(KeyboardKey.KEY_SPACE); // Move Forward
             bool KeyBackWard = IsKeyDown(KeyboardKey.KEY_X); // Move Backward
-
 
             //Rotation
             if (KeyRight)
@@ -95,6 +101,20 @@ namespace Project2D.TankGame
         public void GunUpdate()
         {
             GunRotation = Vector2.Direction(Position,MousePos);
+
+            bool BulletShoot = IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON);
+            float Speed = 5;
+
+            if(BulletShoot)
+            {
+                PlayerBullet pb = new PlayerBullet(gameScene);
+                pb.Velocity = new Vector2((float)Math.Cos(GunRotation),(float)Math.Sin(GunRotation)) * Speed;
+
+                //Set pos to be partway through the barrel
+                pb.Position = Position + (new Vector2((float)Math.Cos(GunRotation), (float)Math.Sin(GunRotation)) * 6);
+
+                gameScene.PlayerBullets.Add(pb);
+            }
         }
 
         public void GunDraw()
