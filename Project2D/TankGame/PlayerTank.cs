@@ -85,9 +85,53 @@ namespace Project2D.TankGame
                 Velocity.y = 0;
             }
 
-            Position += Velocity;
+            //Position += Velocity;
 
             GunUpdate();
+
+            PlayerCollision();
+
+        }
+
+        public void PlayerCollision()
+        {
+            Rectangle ColRect = GetCollisionRectangle();
+
+            //X Collision
+            Rectangle XRect = ColRect;
+            XRect.x += Velocity.x;
+            //Check if touching
+            if (gameScene.tileGrid.RectTileCollision(XRect))
+            {
+                //Move Towards wall until touching
+                XRect = ColRect;
+                XRect.x += (float)Math.Sign(Velocity.x);
+                while (!gameScene.tileGrid.RectTileCollision(XRect))
+                {
+                    Position.x += (float)Math.Sign(Velocity.x);
+                    XRect.x += (float)Math.Sign(Velocity.x);
+                }
+                Velocity.x = 0;
+            }
+            Position.x += Velocity.x;
+
+            //YCollision
+            ColRect = GetCollisionRectangle();
+
+            Rectangle YRect = ColRect;
+            YRect.y += Velocity.y;
+            if (gameScene.tileGrid.RectTileCollision(YRect))
+            {
+                YRect = ColRect;
+                YRect.y += (float)Math.Sign(Velocity.y);
+                while (!gameScene.tileGrid.RectTileCollision(YRect))
+                {
+                    Position.y += (float)Math.Sign(Velocity.y);
+                    YRect.y += (float)Math.Sign(Velocity.y);
+                }
+                Velocity.y = 0;
+            }
+            Position.y += Velocity.y;
         }
 
         public override void Draw()
@@ -95,6 +139,9 @@ namespace Project2D.TankGame
             DrawSelf();
 
             GunDraw();
+
+            //TempCollisions
+            gameScene.tileGrid.RectTileCollision(GetCollisionRectangle());
         }
 
         ////////////////

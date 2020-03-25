@@ -48,6 +48,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="TankGame\Component.cs" />
     <Compile Include="TankGame\Particles\Particle.cs" />
+    <Compile Include="TankGame\Particles\ParticleSystem.cs" />
     <Compile Include="TankGame\PlayerBullet.cs" />
     <Compile Include="TankGame\PlayerTank.cs" />
     <Compile Include="Program.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Scenes\Scene.cs" />
     <Compile Include="Scenes\TitleScene.cs" />
     <Compile Include="Service.cs" />
+    <Compile Include="TankGame\Tiles\TileGrid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -50,6 +50,15 @@ namespace Project2D.TankGame
         public virtual void Draw() { }
         public virtual void OnDestroy() { } //Called when an objects Alive is set to false (Called from the scene running the code)
 
+        public virtual Rectangle GetCollisionRectangle()
+        {
+            Rectangle rect = new Rectangle(Position.x - Origin.x, Position.y - Origin.y, Dimensions.x, Dimensions.y);
+
+            DrawRectangleLinesEx(rect, 1, Color.RED);
+
+            return rect;
+        }
+
 
         public void DrawSelf() // Default draw, draws sprite sheet cells
         {
