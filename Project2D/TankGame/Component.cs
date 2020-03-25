@@ -54,8 +54,6 @@ namespace Project2D.TankGame
         {
             Rectangle rect = new Rectangle(Position.x - Origin.x, Position.y - Origin.y, Dimensions.x, Dimensions.y);
 
-            DrawRectangleLinesEx(rect, 1, Color.RED);
-
             return rect;
         }
 

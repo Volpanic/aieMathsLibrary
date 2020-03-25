@@ -27,7 +27,7 @@ namespace Project2D.Scenes
             //SetupTileGrid
 
             int w = (int)Math.Ceiling((double)(Program.GameWidth / 16));
-            int h = (int)Math.Ceiling((double)(Program.GameHeight / 16));
+            int h = (int)Math.Ceiling((double)(Program.GameHeight / 16))+1;
 
             int[,] tempGrid = new int[w, h];
 
@@ -35,7 +35,20 @@ namespace Project2D.Scenes
             {
                 for (int yy = 0; yy < tempGrid.GetLength(1); yy++)
                 {
-                    tempGrid[xx, yy] = GetRandomValue(0, 1);
+                    tempGrid[xx, yy] = 0;
+                    //HoriWalls
+                    if(xx == 0 || xx == tempGrid.GetLength(0)-1)
+                    {
+                        tempGrid[xx, yy] = 1;
+                    }
+
+                    //VertWalls
+                    if (yy == 0 || yy == tempGrid.GetLength(1) - 1)
+                    {
+                        tempGrid[xx, yy] = 1;
+                    }
+
+
                 }
             }
 
@@ -45,6 +58,7 @@ namespace Project2D.Scenes
         public override void Update()
         {
             player.Update();
+            camera.target = new Raylib.Vector2(player.Position.x,player.Position.y);
 
             //Roll through Player Bullets updates
             for(int i  = 0; i < PlayerBullets.Count; i++)
@@ -58,6 +72,15 @@ namespace Project2D.Scenes
                     i--;
                 }
             }
+
+            //Temp
+            if(IsMouseButtonDown(MouseButton.MOUSE_RIGHT_BUTTON))
+            {
+                Vector2 pos = player.MousePos;
+                pos = new Vector2((float)Math.Floor(pos.x/16), (float)Math.Floor(pos.y / 16));
+
+                tileGrid.TileGridValues[(int)pos.x,(int)pos.y] = 1;
+            }
         }
 
         public override void Draw()
@@ -66,7 +89,7 @@ namespace Project2D.Scenes
 
             player.Draw();
 
-            //Roll through Player Bullets Draw
+            //loop through Player Bullets Draw
             for (int i = 0; i < PlayerBullets.Count; i++)
             {
                 PlayerBullets[i].Draw();

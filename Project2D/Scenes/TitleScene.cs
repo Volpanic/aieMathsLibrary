@@ -34,7 +34,14 @@ namespace Project2D.Scenes
                 game.CurrentGameScene = new GameScene(game);
             }
 
-            if(MenuTran)
+            if (IsKeyPressed(KeyboardKey.KEY_ENTER))
+            {
+                MenuTran = true;
+                MenuTimer = 0;
+                game.CurrentGameScene = new LevelEditor(game);
+            }
+
+            if (MenuTran)
             {
                 switch(MenuPhase)
                 {

@@ -33,6 +33,7 @@ namespace Project2D.TankGame.Tiles
                 {
                     if(TileGridValues[xx,yy] == 1)
                     {
+                        DrawRectangleRec(new Rectangle(xx * CellWidth, yy * CellHeight, CellWidth, CellHeight), Color.GRAY);
                         DrawRectangleLinesEx(new Rectangle(xx*CellWidth,yy*CellHeight,CellWidth,CellHeight),2,Color.BLACK);
                     }
                 }

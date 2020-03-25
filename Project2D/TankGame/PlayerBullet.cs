@@ -32,6 +32,12 @@ namespace Project2D.TankGame
 
         public override void Update()
         {
+
+            if(gameScene.tileGrid.RectTileCollision(new Rectangle(Position.x-2 + Velocity.x,Position.y-2 + Velocity.y,2,2)))
+            {
+                Active = false;
+            }
+
             Position += Velocity;
 
             LifeTimer++;
@@ -46,6 +52,8 @@ namespace Project2D.TankGame
         {
             DrawCircleV(new Raylib.Vector2(Position.x,Position.y),2,Color.BLACK);
         }
+
+        
 
     }
 }

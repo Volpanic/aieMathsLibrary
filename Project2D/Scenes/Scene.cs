@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Raylib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Project2D.Scenes
     {
 
         protected Game game;
+        public Camera2D camera;
 
         public Scene(Game _game)
         {

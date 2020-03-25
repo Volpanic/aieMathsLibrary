@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 using MathClasses;
 using System.IO;
 using Raylib;
+using Project2D.Scenes;
 using static Raylib.Raylib;
 
 namespace Project2D.TankGame
 {
     using MathClasses;
-    using Project2D.Scenes;
-
     public class PlayerTank : Component
     {
         public Vector2 Velocity = new Vector2();
-
 
         //Gun
         public Texture2D GunSprite;
@@ -49,6 +47,22 @@ namespace Project2D.TankGame
 
         public override void Update()
         {
+            PlayerMovement();
+            PlayerCollision();
+
+            GunUpdate();
+
+        }
+
+        public override Rectangle GetCollisionRectangle()
+        {
+            Rectangle rect = new Rectangle((Position.x - Origin.x) + 2, (Position.y - Origin.y) + 2,Dimensions.x-2, Dimensions.y-2);
+
+            return rect;
+        }
+
+        public void PlayerMovement()
+        {
             float rotSpeed = (float)Math.PI;
 
             bool KeyRight = IsKeyDown(KeyboardKey.KEY_D); // Rot Right
@@ -63,13 +77,13 @@ namespace Project2D.TankGame
                 Rotation += rotSpeed;
             }
 
-            if(KeyLeft)
+            if (KeyLeft)
             {
                 Rotation -= rotSpeed;
             }
 
             //Movement
-            if(KeyForward)
+            if (KeyForward)
             {
                 Velocity = new Vector2((float)Math.Cos(Rotation * DEG2RAD), (float)Math.Sin(Rotation * DEG2RAD));
             }
@@ -79,18 +93,11 @@ namespace Project2D.TankGame
                 Velocity = new Vector2(-(float)Math.Cos(Rotation * DEG2RAD), -(float)Math.Sin(Rotation * DEG2RAD));
             }
 
-            if((KeyBackWard && KeyForward) || (!KeyBackWard && !KeyForward))
+            if ((KeyBackWard && KeyForward) || (!KeyBackWard && !KeyForward))
             {
                 Velocity.x = 0;
                 Velocity.y = 0;
             }
-
-            //Position += Velocity;
-
-            GunUpdate();
-
-            PlayerCollision();
-
         }
 
         public void PlayerCollision()
@@ -139,9 +146,6 @@ namespace Project2D.TankGame
             DrawSelf();
 
             GunDraw();
-
-            //TempCollisions
-            gameScene.tileGrid.RectTileCollision(GetCollisionRectangle());
         }
 
         ////////////////

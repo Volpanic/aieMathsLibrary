@@ -12,7 +12,9 @@ namespace Project2D
     {
         public const int GameWidth = 320;
         public const int GameHeight = 180;
-        public static int GameZoom = 3;
+        public static int GameZoom = 4;
+
+        public static Camera2D camera;
 
         public static Font Romulus;
 
@@ -31,19 +33,32 @@ namespace Project2D
 
             game.Init();
 
+            camera = new Camera2D();
+            camera.zoom = 2;
+
             while (!WindowShouldClose())
             {
                 game.Update();
 
+                ClearBackground(Color.WHITE);
+
                 //Draw Scaled Window
+                BeginDrawing();
+
+                
                 BeginTextureMode(AppSurface);
+                //BeginMode2D(camera);
 
                 DrawRectangleGradientV(0,0,GameWidth,GameHeight,Color.WHITE,Color.LIGHTGRAY);
+
                 game.Draw();
 
+                //EndMode2D();
                 EndTextureMode();
-
+                            
                 DrawRenderTexture(AppSurface);
+
+                //EndDrawing();
             }
 
             //unload
