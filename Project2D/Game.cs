@@ -77,9 +77,6 @@ namespace Project2D
 
         public void Draw()
         {
-            BeginDrawing();
-
-            ClearBackground(Color.WHITE);
 
             currentRunningScene.Draw();
 
@@ -111,9 +108,8 @@ namespace Project2D
 
             DrawRectangle(0,0,Program.GameWidth,Program.GameHeight,tranColor);
 
-            DrawText(fps.ToString(), 8, 8, 12, Color.RED);
+            
 
-            EndDrawing();
         }
 
     }

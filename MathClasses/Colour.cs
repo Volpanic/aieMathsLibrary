@@ -16,7 +16,7 @@ namespace MathClasses
         private byte B = 0;
         private byte A = 0;
 
-        public Colour(byte r = 0x00,byte g = 0x00, byte b = 0x00, byte a = 0x00)
+        public Colour(byte r = 0,byte g = 0, byte b = 0, byte a = 0)
         {
             R = r;
             G = g;

@@ -34,31 +34,32 @@ namespace Project2D
             game.Init();
 
             camera = new Camera2D();
-            camera.zoom = 2;
+            camera.zoom = 1;
 
             while (!WindowShouldClose())
             {
-                game.Update();
+                //camera.offset -= new Vector2(1,1);
 
-                ClearBackground(Color.WHITE);
+                game.Update();
 
                 //Draw Scaled Window
                 BeginDrawing();
 
-                
                 BeginTextureMode(AppSurface);
-                //BeginMode2D(camera);
+                BeginMode2D(camera);
 
-                DrawRectangleGradientV(0,0,GameWidth,GameHeight,Color.WHITE,Color.LIGHTGRAY);
+                ClearBackground(Color.WHITE);
+                DrawRectangleGradientV(0, 0, GameWidth, GameHeight, Color.WHITE, Color.LIGHTGRAY);
 
                 game.Draw();
 
-                //EndMode2D();
                 EndTextureMode();
-                            
                 DrawRenderTexture(AppSurface);
+                EndMode2D();
 
-                //EndDrawing();
+                DrawText(GetFPS().ToString(), 8, 8, 12, Color.RED);
+
+                EndDrawing();
             }
 
             //unload
