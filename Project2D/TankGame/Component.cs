@@ -57,13 +57,17 @@ namespace Project2D.TankGame
             return rect;
         }
 
-        public virtual void InEditor()
-        {
-            
+        public virtual Rectangle InEditor()
+        { 
             Rectangle destRectangle = new Rectangle(Position.x + Origin.x, Position.y + Origin.y, Dimensions.x, Dimensions.y);
             Rectangle imageRect = new Rectangle(0, 0, Dimensions.x + 1, Dimensions.y);
             DrawTexturePro(Sprite, imageRect, destRectangle, new Raylib.Vector2(Origin.x, Origin.y), Rotation, Color.WHITE);
             DrawRectangleLinesEx(new Rectangle(Position.x, Position.y, Dimensions.x, Dimensions.y), 1, Color.DARKPURPLE);
+
+            destRectangle.x -= Origin.x;
+            destRectangle.y -= Origin.y;
+
+            return destRectangle;
         }
 
 

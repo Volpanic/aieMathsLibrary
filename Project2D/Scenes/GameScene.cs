@@ -19,6 +19,8 @@ namespace Project2D.Scenes
         public List<PlayerBullet> PlayerBullets = new List<PlayerBullet>();
         public TileGrid tileGrid;
 
+        public List<Rectangle> CameraZones = new List<Rectangle>();
+
         public GameScene(Game _game) : base(_game)
         {
             player = new PlayerTank(this);
@@ -81,6 +83,8 @@ namespace Project2D.Scenes
 
                 tileGrid.TileGridValues[(int)pos.x,(int)pos.y] = 1;
             }
+
+            CameraUpdate();
         }
 
         public override void Draw()
@@ -94,6 +98,11 @@ namespace Project2D.Scenes
             {
                 PlayerBullets[i].Draw();
             }
+        }
+
+        public void CameraUpdate()
+        {
+            Program.camera.offset = -(new Raylib.Vector2(player.Position.x,player.Position.y) - (new Raylib.Vector2(Program.GameWidth,Program.GameHeight)/2));
         }
     }
 }

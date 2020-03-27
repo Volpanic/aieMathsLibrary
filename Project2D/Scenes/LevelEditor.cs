@@ -19,6 +19,7 @@ namespace Project2D.Scenes
         public int ToolSelected = 0; // Draw - CameraZone - Settings
 
         public List<LevelEditorTool> toolBelt = new List<LevelEditorTool>();
+        public List<Rectangle> CamZones = new List<Rectangle>();
 
         public TileGrid tileGrid;
 
@@ -124,6 +125,25 @@ namespace Project2D.Scenes
 
             //Tool belt update
             toolBelt[ToolSelected].Update();
+
+            //RunLevel
+            if(IsKeyPressed(KeyboardKey.KEY_F9))
+            {
+                GameScene newLevel = new GameScene(game);
+
+                newLevel.tileGrid = tileGrid;
+                newLevel.player.Position = componentList[0].Position;
+
+                Program.camera.offset = new Raylib.Vector2(0, 0);
+
+                Zoom = 1;
+                Program.camera.zoom = Zoom;
+
+                newLevel.CameraZones = CamZones;
+
+                game.CurrentGameScene = newLevel;
+            }
+            
         }
 
         public override void Draw()

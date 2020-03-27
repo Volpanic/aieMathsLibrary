@@ -13,6 +13,8 @@ namespace Project2D.Scenes.LevelEditorTools
     using MathClasses;
     public class EntityPenTool : LevelEditorTool
     {
+        public int SelectedComponent = 0;
+
         public EntityPenTool(LevelEditor _ls) : base(_ls)
         {
         }
@@ -31,14 +33,34 @@ namespace Project2D.Scenes.LevelEditorTools
                 newCom.Position = new Vector2((int)levelScene.GridMousePos.x, (int)levelScene.GridMousePos.y) * 16;
 
                 levelScene.componentList.Add(newCom);
+                SelectedComponent = levelScene.componentList.Count - 1;
+            }
+
+            if (IsKeyPressed(KeyboardKey.KEY_DELETE))
+            {
+                if (SelectedComponent >= 0 || SelectedComponent <= levelScene.componentList.Count - 1)
+                {
+                    levelScene.componentList.RemoveAt(SelectedComponent);
+                    SelectedComponent = -1;
+                }
             }
         }
 
         public override void AllDraw()
         {
-            foreach (Component com in levelScene.componentList)
+            for(int i = 0; i < levelScene.componentList.Count; i++)
             {
-                com.InEditor();
+                Component com = levelScene.componentList[i];
+
+                if(i == SelectedComponent)
+                {
+                    DrawRectangleLinesEx(com.InEditor(), 1, Color.GREEN);
+                }
+                else
+                {
+                    com.InEditor();
+                }
+                
             }
         }
     }

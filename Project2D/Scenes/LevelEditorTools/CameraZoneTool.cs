@@ -15,7 +15,7 @@ namespace Project2D.Scenes.LevelEditorTools
     {
         //CamZones
         
-        public List<Rectangle> CamZones = new List<Rectangle>();
+        
         public Rectangle TempCamZone;
         public int SelectedCamZoneIndex = -1;
         public bool CreatingZone = false;
@@ -31,9 +31,9 @@ namespace Project2D.Scenes.LevelEditorTools
             if (IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
                 bool HasClickOnZone = false;
-                for (int i = 0; i < CamZones.Count; i++)
+                for (int i = 0; i < levelScene.CamZones.Count; i++)
                 {
-                    Rectangle recCam = CamZones[i];
+                    Rectangle recCam = levelScene.CamZones[i];
 
                     if (i != SelectedCamZoneIndex && CheckCollisionPointRec(new Raylib.Vector2(levelScene.MousePos.x, levelScene.MousePos.y), recCam))
                     {
@@ -55,7 +55,7 @@ namespace Project2D.Scenes.LevelEditorTools
             {
                 if (SelectedCamZoneIndex != -1)
                 {
-                    CamZones.RemoveAt(SelectedCamZoneIndex);
+                    levelScene.CamZones.RemoveAt(SelectedCamZoneIndex);
                 }
             }
 
@@ -76,8 +76,8 @@ namespace Project2D.Scenes.LevelEditorTools
 
             if (SelectedCamZoneIndex == -1 && IsMouseButtonReleased(MouseButton.MOUSE_RIGHT_BUTTON))
             {
-                CamZones.Add(TempCamZone);
-                SelectedCamZoneIndex = CamZones.Count - 1;
+                levelScene.CamZones.Add(TempCamZone);
+                SelectedCamZoneIndex = levelScene.CamZones.Count - 1;
                 CreatingZone = false;
             }
         }
@@ -94,9 +94,9 @@ namespace Project2D.Scenes.LevelEditorTools
         public override void AllDraw()
         {
             //CamZones
-            for (int i = 0; i < CamZones.Count; i++)
+            for (int i = 0; i < levelScene.CamZones.Count; i++)
             {
-                Rectangle recCam = CamZones[i];
+                Rectangle recCam = levelScene.CamZones[i];
 
                 if (SelectedCamZoneIndex != -1 && i == SelectedCamZoneIndex)
                 {

@@ -21,11 +21,21 @@ namespace Project2D.TankGame
         public Vector2 GunOrigin;
         public float GunRotation = 0.0f;
 
-        public Vector2 MousePos { get { return new Vector2(GetMousePosition().x, GetMousePosition().y) / Program.GameZoom; } }
+        public Vector2 MousePos { get { return GetRelativeMousePosition(); } }
 
         public PlayerTank(GameScene _gS) : base(_gS)
         {
 
+        }
+
+        private Vector2 GetRelativeMousePosition()
+        {
+            Vector2 RefMousePos = (new Vector2(GetMousePosition().x, GetMousePosition().y) / Program.GameZoom);
+            Vector2 CamOffSet = new Vector2(Program.camera.offset.x, Program.camera.offset.y);
+
+            RefMousePos -= CamOffSet;
+
+            return RefMousePos;
         }
 
         public override void Create()
@@ -85,12 +95,12 @@ namespace Project2D.TankGame
             //Movement
             if (KeyForward)
             {
-                Velocity = new Vector2((float)Math.Cos(Rotation * DEG2RAD), (float)Math.Sin(Rotation * DEG2RAD));
+                Velocity = new Vector2((float)Math.Cos(Rotation * DEG2RAD), (float)Math.Sin(Rotation * DEG2RAD))*2;
             }
 
             if (KeyBackWard)
             {
-                Velocity = new Vector2(-(float)Math.Cos(Rotation * DEG2RAD), -(float)Math.Sin(Rotation * DEG2RAD));
+                Velocity = new Vector2(-(float)Math.Cos(Rotation * DEG2RAD), -(float)Math.Sin(Rotation * DEG2RAD))*2;
             }
 
             if ((KeyBackWard && KeyForward) || (!KeyBackWard && !KeyForward))
