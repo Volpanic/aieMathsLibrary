@@ -9,64 +9,55 @@ namespace MathClasses
     public class Colour
     {
 
-        public UInt32 colour { get { return GetColour(); } }
-
-        private byte R = 0;
-        private byte G = 0;
-        private byte B = 0;
-        private byte A = 0;
+        public UInt32 colour { get; set; }
 
         public Colour(byte r = 0,byte g = 0, byte b = 0, byte a = 0)
         {
-            R = r;
-            G = g;
-            B = b;
-            A = a;
-        }
-
-        private UInt32 GetColour()
-        {
-            return BitConverter.ToUInt32(new byte[] { A,B,G,R},0);
+            colour |= (UInt32)(r << 24);
+            colour |= (UInt32)(g << 16);
+            colour |= (UInt32)(b << 8);
+            colour |= (UInt32)(a);
         }
 
         public void SetRed(byte newRed)
         {
-            R = newRed;
+            colour |= (UInt32)(newRed << 24);
         }
 
         public byte GetRed()
         {
-            return R;
+            return (byte)(colour >> 24);
         }
 
         public void SetGreen(byte newGreen)
         {
-            G = newGreen;
+            colour |= (UInt32)(newGreen << 16);
         }
 
         public byte GetGreen()
         {
-            return G;
+            return (byte)(colour >> 16);
         }
 
         public void SetBlue(byte newBlue)
         {
-            B = newBlue;
+            colour |= (UInt32)(newBlue << 8);
         }
 
         public byte GetBlue()
         {
-            return B;
+            return (byte)(colour >> 8);
         }
 
         public void SetAlpha(byte newAlpha)
         {
-            A = newAlpha;
+            colour |= (UInt32)(newAlpha);
         }
 
         public byte GetAlpha()
         {
-            return A;
+            Console.WriteLine((byte)(colour)) ;
+            return (byte)(colour);
         }
 
     }
