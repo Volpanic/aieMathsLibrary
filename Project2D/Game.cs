@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using static Raylib.Raylib;
+using MathClasses;
 using Project2D.Scenes;
 using Raylib;
-using static Raylib.Raylib;
+using Project2D.TankGame;
+using System.Diagnostics;
 
 namespace Project2D
 {
@@ -106,10 +109,7 @@ namespace Project2D
 
             tranColor.a = transitionAlpha;
 
-            DrawRectangle(0,0,Program.GameWidth,Program.GameHeight,tranColor);
-
-            
-
+            DrawRectangle(0,0,Program.GameWidth,Program.GameHeight,tranColor); 
         }
 
     }

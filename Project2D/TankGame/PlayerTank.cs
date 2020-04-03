@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MathClasses;
 using System.IO;
 using Raylib;
-using Project2D.Scenes;
 using static Raylib.Raylib;
+using MathClasses;
+using Project2D.Scenes;
+using Project2D.TankGame;
+
+using rl = Raylib;
 
 namespace Project2D.TankGame
 {
@@ -28,12 +31,9 @@ namespace Project2D.TankGame
 
         }
 
-        private Vector2 GetRelativeMousePosition()
+        public static Vector2 GetRelativeMousePosition()
         {
             Vector2 RefMousePos = (new Vector2(GetMousePosition().x, GetMousePosition().y) / Program.GameZoom);
-            Vector2 CamOffSet = new Vector2(Program.camera.offset.x, Program.camera.offset.y);
-
-            RefMousePos -= CamOffSet;
 
             return RefMousePos;
         }
@@ -183,7 +183,7 @@ namespace Project2D.TankGame
             Rectangle ImageRect = new Rectangle(0,0,GunSprite.width,GunSprite.height); // Image rectangle (Whole Image)
             Rectangle DestRect = new Rectangle(Position.x,Position.y,ImageRect.width,ImageRect.height); // World Rect
 
-            DrawTexturePro(GunSprite,ImageRect,DestRect,new Raylib.Vector2(GunOrigin.x,GunOrigin.y),GunRotation * RAD2DEG,Color.WHITE);
+            DrawTexturePro(GunSprite,MathMore.toRayRect(ImageRect),MathMore.toRayRect(DestRect),new Raylib.Vector2(GunOrigin.x,GunOrigin.y),GunRotation * RAD2DEG,Color.WHITE);
 
             DrawCircleLines((int)MousePos.x, (int)MousePos.y, 3, Color.BLACK);
         }

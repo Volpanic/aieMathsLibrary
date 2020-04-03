@@ -56,9 +56,13 @@ namespace MathClasses
 
         public byte GetAlpha()
         {
-            Console.WriteLine((byte)(colour)) ;
             return (byte)(colour);
         }
+
+        //Static Colours
+        public static Colour White = new Colour(255, 255, 255, 255);
+        public static Colour Black = new Colour(0, 0, 0, 0);
+        public static Colour Gray  = new Colour(224,34,16,255);
 
     }
 }

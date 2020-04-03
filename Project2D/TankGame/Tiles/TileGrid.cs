@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Project2D.Scenes;
-using Raylib;
+using System.IO;
 using static Raylib.Raylib;
+using MathClasses;
+using Project2D.Scenes;
+
+using rl = Raylib;
+
 
 namespace Project2D.TankGame.Tiles
 {
@@ -33,8 +36,8 @@ namespace Project2D.TankGame.Tiles
                 {
                     if(TileGridValues[xx,yy] == 1)
                     {
-                        DrawRectangleRec(new Rectangle(xx * CellWidth, yy * CellHeight, CellWidth, CellHeight), Color.GRAY);
-                        DrawRectangleLinesEx(new Rectangle(xx*CellWidth,yy*CellHeight,CellWidth,CellHeight),2,Color.BLACK);
+                        DrawRectangleRec(MathMore.toRayRect(new Rectangle(xx * CellWidth, yy * CellHeight, CellWidth, CellHeight)), MathMore.toRayColour(Colour.Gray));
+                        DrawRectangleLinesEx(MathMore.toRayRect(new Rectangle(xx*CellWidth,yy*CellHeight,CellWidth,CellHeight)),2,MathMore.toRayColour(Colour.Black));
                     }
                 }
             }
@@ -69,7 +72,7 @@ namespace Project2D.TankGame.Tiles
                         //Creates a rect representing the tile
                         Rectangle TileRect = new Rectangle(xx*CellWidth,yy*CellHeight,CellWidth,CellHeight);
 
-                        if(CheckCollisionRecs(rect,TileRect))
+                        if (rect.CollidingWith(TileRect))
                         {
                             return true;
                         }

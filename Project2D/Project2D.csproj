@@ -46,12 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
-    <Compile Include="Scenes\LevelEditor.cs" />
-    <Compile Include="Scenes\LevelEditorTools\CameraZoneTool.cs" />
-    <Compile Include="Scenes\LevelEditorTools\EntityPenTool.cs" />
-    <Compile Include="Scenes\LevelEditorTools\TilePen.cs" />
-    <Compile Include="Scenes\LevelEditorTools\LevelEditorTool.cs" />
     <Compile Include="TankGame\Component.cs" />
+    <Compile Include="TankGame\MathMore.cs" />
     <Compile Include="TankGame\Particles\Particle.cs" />
     <Compile Include="TankGame\Particles\ParticleSystem.cs" />
     <Compile Include="TankGame\PlayerBullet.cs" />

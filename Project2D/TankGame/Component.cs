@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MathClasses;
+using System.IO;
 using Raylib;
 using static Raylib.Raylib;
+using MathClasses;
+using Project2D.Scenes;
+using Project2D.TankGame;
+
+using rl = Raylib;
 
 namespace Project2D.TankGame
 {
@@ -61,8 +66,8 @@ namespace Project2D.TankGame
         { 
             Rectangle destRectangle = new Rectangle(Position.x + Origin.x, Position.y + Origin.y, Dimensions.x, Dimensions.y);
             Rectangle imageRect = new Rectangle(0, 0, Dimensions.x + 1, Dimensions.y);
-            DrawTexturePro(Sprite, imageRect, destRectangle, new Raylib.Vector2(Origin.x, Origin.y), Rotation, Color.WHITE);
-            DrawRectangleLinesEx(new Rectangle(Position.x, Position.y, Dimensions.x, Dimensions.y), 1, Color.DARKPURPLE);
+            DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x, Origin.y), Rotation, Color.WHITE);
+            DrawRectangleLinesEx(MathMore.toRayRect(new Rectangle(Position.x, Position.y, Dimensions.x, Dimensions.y)), 1, Color.DARKPURPLE);
 
             destRectangle.x -= Origin.x;
             destRectangle.y -= Origin.y;
@@ -81,7 +86,7 @@ namespace Project2D.TankGame
                 // but that doesnt allow rotation and stuff
 
                 Rectangle imageRect = new Rectangle(0, 0, Dimensions.x+1, Dimensions.y);
-                DrawTexturePro(Sprite, imageRect, destRectangle, new Raylib.Vector2(Origin.x, Origin.y), Rotation, Color.WHITE);
+                DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x, Origin.y), Rotation, Color.WHITE);
             }
             else
             {
@@ -94,7 +99,7 @@ namespace Project2D.TankGame
                 }
 
                 Rectangle imageRect = new Rectangle(sheetXPos,0,Dimensions.x+1,Dimensions.y);
-                DrawTexturePro(Sprite,imageRect,destRectangle, new Raylib.Vector2(Origin.x,Origin.y),Rotation,Color.WHITE);
+                DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x,Origin.y),Rotation,Color.WHITE);
             }
         }
     }

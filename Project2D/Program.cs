@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Raylib;
+using System.IO;
 using static Raylib.Raylib;
+using MathClasses;
+using Project2D.Scenes;
+using Raylib;
+using Project2D.TankGame;
 
 namespace Project2D
 {
@@ -13,8 +17,6 @@ namespace Project2D
         public const int GameWidth = 320;
         public const int GameHeight = 180;
         public static int GameZoom = 4;
-
-        public static Camera2D camera;
 
         public static Font Romulus;
 
@@ -33,9 +35,6 @@ namespace Project2D
 
             game.Init();
 
-            camera = new Camera2D();
-            camera.zoom = 1;
-
             while (!WindowShouldClose())
             {
                 //camera.offset -= new Vector2(1,1);
@@ -46,10 +45,9 @@ namespace Project2D
                 BeginDrawing();
 
                 BeginTextureMode(AppSurface);
-                BeginMode2D(camera);
 
+                ClearBackground(MathMore.toRayColour(new Colour(255,255,255,1)));
                 ClearBackground(Color.WHITE);
-                DrawRectangleGradientV(0, 0, GameWidth, GameHeight, Color.WHITE, Color.LIGHTGRAY);
 
                 game.Draw();
 
@@ -57,7 +55,7 @@ namespace Project2D
                 DrawRenderTexture(AppSurface);
                 EndMode2D();
 
-                DrawText(GetFPS().ToString(), 8, 8, 12, Color.RED);
+                DrawText(GetFPS().ToString(), 8, 8, 12, MathMore.toRayColour(new Colour(255, 0, 0, 1)));
 
                 EndDrawing();
             }

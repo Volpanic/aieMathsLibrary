@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MathClasses;
-using Project2D.TankGame;
-using Raylib;
+using System.IO;
 using static Raylib.Raylib;
+using MathClasses;
+using Project2D.Scenes;
+using Raylib;
+using Project2D.TankGame;
+using System.Diagnostics;
 
 namespace Project2D.Scenes
 {
@@ -18,8 +21,6 @@ namespace Project2D.Scenes
         public PlayerTank player;
         public List<PlayerBullet> PlayerBullets = new List<PlayerBullet>();
         public TileGrid tileGrid;
-
-        public List<Rectangle> CameraZones = new List<Rectangle>();
 
         public GameScene(Game _game) : base(_game)
         {
@@ -60,7 +61,6 @@ namespace Project2D.Scenes
         public override void Update()
         {
             player.Update();
-            camera.target = new Raylib.Vector2(player.Position.x,player.Position.y);
 
             //Roll through Player Bullets updates
             for(int i  = 0; i < PlayerBullets.Count; i++)
@@ -83,8 +83,6 @@ namespace Project2D.Scenes
 
                 tileGrid.TileGridValues[(int)pos.x,(int)pos.y] = 1;
             }
-
-            CameraUpdate();
         }
 
         public override void Draw()
@@ -98,11 +96,6 @@ namespace Project2D.Scenes
             {
                 PlayerBullets[i].Draw();
             }
-        }
-
-        public void CameraUpdate()
-        {
-            Program.camera.offset = -(new Raylib.Vector2(player.Position.x,player.Position.y) - (new Raylib.Vector2(Program.GameWidth,Program.GameHeight)/2));
         }
     }
 }
