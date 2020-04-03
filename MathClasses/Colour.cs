@@ -62,7 +62,8 @@ namespace MathClasses
         //Static Colours
         public static Colour White = new Colour(255, 255, 255, 255);
         public static Colour Black = new Colour(0, 0, 0, 0);
-        public static Colour Gray  = new Colour(224,34,16,255);
+        public static Colour Gray  = new Colour(24,34,42,255);
+        public static Colour Red   = new Colour(24, 34, 16, 255);
 
     }
 }

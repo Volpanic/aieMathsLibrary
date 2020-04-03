@@ -40,6 +40,11 @@ namespace MathClasses
             return (x < other.Right && Right > other.x && y < other.Bottem && Bottem > other.y);
         }
 
+        public bool PointInRect(Vector2 point)
+        {
+            return ((point.x > x && point.x < Right) && (point.y > y && point.y < Bottem));
+        }
+
         public static bool RectCollision(Rectangle rect1, Rectangle rect2)
         {
             return rect1.CollidingWith(rect2);

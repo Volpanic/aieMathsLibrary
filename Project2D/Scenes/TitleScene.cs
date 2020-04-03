@@ -58,18 +58,30 @@ namespace Project2D.Scenes
             }
         }
 
-        MathClasses.Rectangle r1 = new MathClasses.Rectangle(16,16,16,16);
-        MathClasses.Rectangle r2 = new MathClasses.Rectangle(64, 64, 16, 16);
+        CollisionShape P1 = new CollisionShape(6, new MathClasses.Vector2(32,32),0,16);
+        CollisionShape P2 = new CollisionShape(6, new MathClasses.Vector2(16, 16), 0, 16);
 
         public override void Draw()
         {
             MenuTimer++;
 
-            r2.x = PlayerTank.GetRelativeMousePosition().x;
-            r2.y = PlayerTank.GetRelativeMousePosition().y;
+            P2.Position = PlayerTank.GetRelativeMousePosition();
+            P2.Rotation += (float)Math.PI / 64;
 
-            DrawRectangleLinesEx(new rl.Rectangle(r1.x, r1.y, r1.width, r1.height), 2, Color.BLACK);
-            DrawRectangleLinesEx(new rl.Rectangle(r2.x, r2.y, r2.width, r2.height), 2, r1.CollidingWith(r2)? Color.GREEN : Color.RED);
+            int i = 0;
+            for(i = 0; i < P1.Points.Count-1; i++)
+            {
+                DrawLineEx(MathMore.toVector2(P1.Points[i]), MathMore.toVector2(P1.Points[i+1]),2,Color.BLACK);
+            }
+
+            DrawLineEx(MathMore.toVector2(P1.Points[i]), MathMore.toVector2(P1.Points[0]), 2, Color.BLACK);
+
+            for (i = 0; i < P2.Points.Count - 1; i++)
+            {
+                DrawLineEx(MathMore.toVector2(P2.Points[i]), MathMore.toVector2(P2.Points[i + 1]), 1, Color.BLACK);
+            }
+
+            DrawLineEx(MathMore.toVector2(P2.Points[i]), MathMore.toVector2(P2.Points[0]), 1, CollisionShape.Intersect(P1,P2)? Color.GREEN : Color.RED);
 
             switch (MenuPhase)
             {

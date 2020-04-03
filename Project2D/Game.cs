@@ -23,7 +23,8 @@ namespace Project2D
         private int fps = 1;
         private int frames;
 
-        public static float deltaTime = 0.005f;
+        public static float cleandeltaTime = 0.005f;
+        public static float deltaTime { get {return (cleandeltaTime * 60); }}
 
         private Scene currentRunningScene;
         private Scene nextScene = null;
@@ -64,7 +65,7 @@ namespace Project2D
         {
             lastTime = currentTime;
             currentTime = stopwatch.ElapsedMilliseconds;
-            deltaTime = (currentTime - lastTime) / 1000.0f;
+            cleandeltaTime = (currentTime - lastTime) / 1000.0f;
             timer += deltaTime;
             if (timer >= 1)
             {
@@ -82,6 +83,8 @@ namespace Project2D
         {
 
             currentRunningScene.Draw();
+
+            DrawText((Game.deltaTime).ToString(),16,32,12,Color.GREEN);
 
             Color tranColor = Color.BLACK;
 

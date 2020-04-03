@@ -18,6 +18,7 @@ namespace Project2D.TankGame
     public class PlayerTank : Component
     {
         public Vector2 Velocity = new Vector2();
+        public float Speed = 0;
 
         //Gun
         public Texture2D GunSprite;
@@ -95,18 +96,19 @@ namespace Project2D.TankGame
             //Movement
             if (KeyForward)
             {
-                Velocity = new Vector2((float)Math.Cos(Rotation * DEG2RAD), (float)Math.Sin(Rotation * DEG2RAD))*2;
+                Velocity = new Vector2((float)Math.Cos(Rotation * DEG2RAD), (float)Math.Sin(Rotation * DEG2RAD));
+                Speed = Numbers.Approach(Speed, 2, 0.11f);
             }
 
             if (KeyBackWard)
             {
-                Velocity = new Vector2(-(float)Math.Cos(Rotation * DEG2RAD), -(float)Math.Sin(Rotation * DEG2RAD))*2;
+                Velocity = new Vector2(-(float)Math.Cos(Rotation * DEG2RAD), -(float)Math.Sin(Rotation * DEG2RAD));
+                Speed = Numbers.Approach(Speed, 2, 0.11f);
             }
 
             if ((KeyBackWard && KeyForward) || (!KeyBackWard && !KeyForward))
             {
-                Velocity.x = 0;
-                Velocity.y = 0;
+                Speed = Numbers.Approach(Speed, 0, 0.11f);
             }
         }
 
@@ -114,41 +116,45 @@ namespace Project2D.TankGame
         {
             Rectangle ColRect = GetCollisionRectangle();
 
+            Vector2 actualVel = (Velocity * Speed) * (Game.deltaTime);
+
             //X Collision
             Rectangle XRect = ColRect;
-            XRect.x += Velocity.x;
+            XRect.x += actualVel.x;
             //Check if touching
             if (gameScene.tileGrid.RectTileCollision(XRect))
             {
                 //Move Towards wall until touching
                 XRect = ColRect;
-                XRect.x += (float)Math.Sign(Velocity.x);
+                XRect.x += (float)Math.Sign(actualVel.x);
                 while (!gameScene.tileGrid.RectTileCollision(XRect))
                 {
-                    Position.x += (float)Math.Sign(Velocity.x);
-                    XRect.x += (float)Math.Sign(Velocity.x);
+                    Position.x += (float)Math.Sign(actualVel.x);
+                    XRect.x += (float)Math.Sign(actualVel.x);
                 }
                 Velocity.x = 0;
+                actualVel.x = 0;
             }
-            Position.x += Velocity.x;
+            Position.x += actualVel.x;
 
             //YCollision
             ColRect = GetCollisionRectangle();
 
             Rectangle YRect = ColRect;
-            YRect.y += Velocity.y;
+            YRect.y += actualVel.y;
             if (gameScene.tileGrid.RectTileCollision(YRect))
             {
                 YRect = ColRect;
-                YRect.y += (float)Math.Sign(Velocity.y);
+                YRect.y += (float)Math.Sign(actualVel.y);
                 while (!gameScene.tileGrid.RectTileCollision(YRect))
                 {
-                    Position.y += (float)Math.Sign(Velocity.y);
-                    YRect.y += (float)Math.Sign(Velocity.y);
+                    Position.y += (float)Math.Sign(actualVel.y);
+                    YRect.y += (float)Math.Sign(actualVel.y);
                 }
                 Velocity.y = 0;
+                actualVel.y = 0;
             }
-            Position.y += Velocity.y;
+            Position.y += actualVel.y;
         }
 
         public override void Draw()

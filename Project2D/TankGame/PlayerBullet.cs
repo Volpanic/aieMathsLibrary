@@ -38,7 +38,7 @@ namespace Project2D.TankGame
                 Active = false;
             }
 
-            Position += Velocity;
+            Position += Velocity * Game.deltaTime;
 
             LifeTimer++;
 
