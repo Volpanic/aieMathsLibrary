@@ -1,4 +1,5 @@
-﻿using Raylib;
+﻿using Project2D.TankGame.Particles;
+using Raylib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace Project2D.Scenes
 
         protected Game game;
         public Camera2D camera;
+        public ParticleSystem partSystem;
 
         public Scene(Game _game)
         {
             game = _game;
+            partSystem = new ParticleSystem();
         }
 
         public virtual void Update()

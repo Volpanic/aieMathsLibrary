@@ -87,8 +87,10 @@ namespace Project2D.Scenes
 
         public override void Draw()
         {
+            
             tileGrid.DrawTiles();
 
+            partSystem.Draw();
             player.Draw();
 
             //loop through Player Bullets Draw
@@ -96,6 +98,7 @@ namespace Project2D.Scenes
             {
                 PlayerBullets[i].Draw();
             }
+            
         }
     }
 }

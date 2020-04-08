@@ -18,7 +18,7 @@ namespace Project2D.TankGame
         public Vector2 Velocity = new Vector2();
 
         private int MaxLifeTime = 120;
-        private int LifeTimer = 0;
+        private float LifeTimer = 0;
 
         public PlayerBullet(GameScene _gS) : base(_gS)
         {
@@ -32,15 +32,21 @@ namespace Project2D.TankGame
 
         public override void Update()
         {
-
-            if(gameScene.tileGrid.RectTileCollision(new Rectangle(Position.x-2 + Velocity.x,Position.y-2 + Velocity.y,2,2)))
+            //XCheck
+            if(gameScene.tileGrid.RectTileCollision(new Rectangle(Position.x-2 + (Velocity * Game.deltaTime).x,Position.y-2,2,2)))
             {
-                Active = false;
+                Velocity.x = -Velocity.x;
             }
 
-            Position += Velocity * Game.deltaTime;
+            //YCheck
+            if (gameScene.tileGrid.RectTileCollision(new Rectangle(Position.x - 2, Position.y - 2 + (Velocity * Game.deltaTime).y, 2, 2)))
+            {
+                Velocity.y = -Velocity.y;
+            }
 
-            LifeTimer++;
+            Position += (Velocity * Game.deltaTime);
+
+            LifeTimer += Game.deltaTime;
 
             if(LifeTimer >= MaxLifeTime)
             {

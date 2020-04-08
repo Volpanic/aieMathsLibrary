@@ -15,15 +15,22 @@ using rl = Raylib;
 namespace Project2D.TankGame
 {
     using MathClasses;
+    using Project2D.TankGame.Particles;
+
     public class PlayerTank : Component
     {
         public Vector2 Velocity = new Vector2();
         public float Speed = 0;
+        public Texture2D TredSprite;
 
         //Gun
         public Texture2D GunSprite;
         public Vector2 GunOrigin;
         public float GunRotation = 0.0f;
+        public int BulletAmount = 2;
+        float BulletTimer = 0;
+        float BulletTimerMax = 10;
+        float TredTimer = 0;
 
         public Vector2 MousePos { get { return GetRelativeMousePosition(); } }
 
@@ -44,22 +51,41 @@ namespace Project2D.TankGame
             Sprite = LoadTexture(Path.Combine("Resources","Sprites","spr_tank.png")); // Set to tank sprite
             Dimensions = new Vector2(Sprite.width,Sprite.height); // Sets sprite width and height
             Origin = Dimensions / 2; // Centers the sprite
+            TredSprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_tred.png"));
 
             //Gun Stuff
             GunSprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_tank_gun.png")); // Load Gun Sprite
             GunOrigin = new Vector2(2, 3); //Set origin 
+
         }
 
         public override void OnDestroy()
         {
             UnloadTexture(Sprite);
             UnloadTexture(GunSprite);
+            UnloadTexture(TredSprite);
         }
 
         public override void Update()
         {
             PlayerMovement();
             PlayerCollision();
+
+            if(Speed != 0)
+            {
+                TredTimer += Game.deltaTime;
+
+                if (TredTimer > 5)
+                {
+                    TredTimer = TredTimer % 5;
+                    Vector2 tred1 = new Vector2((2) * (float)Math.Cos(Rotation),(+4) * (float)Math.Sin(Rotation));
+                    Vector2 tred2 = new Vector2((2) * (float)Math.Cos(Rotation),(-4) * (float)Math.Sin(Rotation));
+                    tred1 += Position;
+                    tred2 += Position;
+                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred1, new Vector2(1, 1), Rotation,true, 60));
+                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred2, new Vector2(1, 1), Rotation,true, 60));
+                }
+            }
 
             GunUpdate();
 
@@ -85,12 +111,12 @@ namespace Project2D.TankGame
             //Rotation
             if (KeyRight)
             {
-                Rotation += rotSpeed;
+                Rotation += rotSpeed * Game.deltaTime;
             }
 
             if (KeyLeft)
             {
-                Rotation -= rotSpeed;
+                Rotation -= rotSpeed * Game.deltaTime;
             }
 
             //Movement
@@ -169,18 +195,31 @@ namespace Project2D.TankGame
         {
             GunRotation = Vector2.Direction(Position,MousePos);
 
-            bool BulletShoot = IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON);
+            bool BulletShoot = IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON);
             float Speed = 5;
 
-            if(BulletShoot)
+            if (IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)) BulletTimer = BulletTimerMax;
+
+            BulletTimer += Game.deltaTime;
+
+            if(BulletTimer >= BulletTimerMax && BulletShoot)
             {
-                PlayerBullet pb = new PlayerBullet(gameScene);
-                pb.Velocity = new Vector2((float)Math.Cos(GunRotation),(float)Math.Sin(GunRotation)) * Speed;
+                BulletTimer = BulletTimer % BulletTimerMax;
 
-                //Set pos to be partway through the barrel
-                pb.Position = Position + (new Vector2((float)Math.Cos(GunRotation), (float)Math.Sin(GunRotation)) * 6);
+                float dirCone = 0 + (((float)Math.PI / 32.0f) * BulletAmount);
+                dirCone = Math.Min(dirCone, (float)Math.PI *0.6f);
+                for(int b = 0; b < BulletAmount; b++)
+                {
+                    PlayerBullet pb = new PlayerBullet(gameScene);
 
-                gameScene.PlayerBullets.Add(pb);
+                    float newGunRotation = (GunRotation - (dirCone / 2) + (dirCone / (float)BulletAmount * b));
+                    pb.Velocity = new Vector2((float)Math.Cos(newGunRotation), (float)Math.Sin(newGunRotation)) * Speed;
+
+                    //Set pos to be partway through the barrel
+                    pb.Position = Position + (new Vector2((float)Math.Cos(newGunRotation), (float)Math.Sin(newGunRotation)) * 6);
+
+                    gameScene.PlayerBullets.Add(pb);
+                }
             }
         }
 

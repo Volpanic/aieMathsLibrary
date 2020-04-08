@@ -25,6 +25,7 @@ namespace Project2D.TankGame
         public Vector2 Origin;    // Draw Origin
         public Vector2 Dimensions;// Width and height of the sprite / a sprites cell
         public Vector2 Scale;     // Size
+        public Color Blend;       // Colour
 
         public int ImageIndex = 0;// Decides which cell of animation to draw from a sprite sheet
         public bool Active = true;
@@ -41,6 +42,8 @@ namespace Project2D.TankGame
             Scale = new Vector2(1,1);
 
             gameScene = _gameScene;
+
+            Blend = Color.WHITE;
 
             //Runs create which allows children to set sprites and stuff
             Create();
@@ -86,7 +89,7 @@ namespace Project2D.TankGame
                 // but that doesnt allow rotation and stuff
 
                 Rectangle imageRect = new Rectangle(0, 0, Dimensions.x+1, Dimensions.y);
-                DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x, Origin.y), Rotation, Color.WHITE);
+                DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x, Origin.y), Rotation, Blend);
             }
             else
             {
@@ -99,7 +102,7 @@ namespace Project2D.TankGame
                 }
 
                 Rectangle imageRect = new Rectangle(sheetXPos,0,Dimensions.x+1,Dimensions.y);
-                DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x,Origin.y),Rotation,Color.WHITE);
+                DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x,Origin.y),Rotation, Blend);
             }
         }
     }
