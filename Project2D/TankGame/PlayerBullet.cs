@@ -35,13 +35,13 @@ namespace Project2D.TankGame
             //XCheck
             if(gameScene.tileGrid.RectTileCollision(new Rectangle(Position.x-2 + (Velocity * Game.deltaTime).x,Position.y-2,2,2)))
             {
-                Velocity.x = -Velocity.x;
+                Active = false;
             }
 
             //YCheck
             if (gameScene.tileGrid.RectTileCollision(new Rectangle(Position.x - 2, Position.y - 2 + (Velocity * Game.deltaTime).y, 2, 2)))
             {
-                Velocity.y = -Velocity.y;
+                Active = false;
             }
 
             Position += (Velocity * Game.deltaTime);

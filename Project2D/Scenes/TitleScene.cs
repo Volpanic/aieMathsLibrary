@@ -23,12 +23,15 @@ namespace Project2D.Scenes
         public int MenuTimer = 0;
         public bool MenuTran = false;
 
+        public DialougeBox dialougeBox;
+
         //Raylibs not really meant to use a vector class other than it's own
         //For the menu i'm using the base vector2 class but ill use my library for the player...
 
         public TitleScene(Game _game) : base(_game)
         {
-           
+            dialougeBox = new DialougeBox();
+            dialougeBox.Messages.Add("Test message box, and anothe rtesaghsrhgs shfshshsf sfh fh wsfh sfh s hsf hsfh sfhsfh.");
         }
 
         public override void Update()
@@ -91,6 +94,8 @@ namespace Project2D.Scenes
                     break;
                 }
             }
+
+            dialougeBox.DrawDialougeBox();
         }
 
         public void PressStartButtonMenuPhase()

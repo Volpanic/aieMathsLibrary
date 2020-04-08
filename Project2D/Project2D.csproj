@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="TankGame\Component.cs" />
+    <Compile Include="TankGame\DialougeBox.cs" />
     <Compile Include="TankGame\MathMore.cs" />
     <Compile Include="TankGame\Particles\Particle.cs" />
     <Compile Include="TankGame\Particles\ParticleSystem.cs" />

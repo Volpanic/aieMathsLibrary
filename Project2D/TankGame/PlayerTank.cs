@@ -27,7 +27,7 @@ namespace Project2D.TankGame
         public Texture2D GunSprite;
         public Vector2 GunOrigin;
         public float GunRotation = 0.0f;
-        public int BulletAmount = 2;
+        public int BulletAmount = 20;
         float BulletTimer = 0;
         float BulletTimerMax = 10;
         float TredTimer = 0;
@@ -82,8 +82,8 @@ namespace Project2D.TankGame
                     Vector2 tred2 = new Vector2((2) * (float)Math.Cos(Rotation),(-4) * (float)Math.Sin(Rotation));
                     tred1 += Position;
                     tred2 += Position;
-                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred1, new Vector2(1, 1), Rotation,true, 60));
-                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred2, new Vector2(1, 1), Rotation,true, 60));
+                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred1, Vector2.Zero, Rotation,true, 60));
+                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred2, Vector2.Zero, Rotation,true, 60));
                 }
             }
 
@@ -207,7 +207,7 @@ namespace Project2D.TankGame
                 BulletTimer = BulletTimer % BulletTimerMax;
 
                 float dirCone = 0 + (((float)Math.PI / 32.0f) * BulletAmount);
-                dirCone = Math.Min(dirCone, (float)Math.PI *0.6f);
+                dirCone = Math.Min(dirCone, (float)Math.PI *0.25f);
                 for(int b = 0; b < BulletAmount; b++)
                 {
                     PlayerBullet pb = new PlayerBullet(gameScene);

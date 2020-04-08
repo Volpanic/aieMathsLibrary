@@ -8,6 +8,19 @@ namespace MathClasses
 {
     public static class Numbers
     {
+        public static int Approach(int value, int target, int amount)
+        {
+            if (value < target)
+            {
+                value = Math.Min(value + amount, target);
+            }
+            else
+            {
+                value = Math.Max(value - amount, target);
+            }
+            return value;
+        }
+
         public static float Approach(float value, float target, float amount)
         {
             if (value < target)
