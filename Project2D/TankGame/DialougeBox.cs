@@ -21,8 +21,18 @@ namespace Project2D.TankGame
         public int CurrentMessage;
 
         public bool Visible = true;
-        public rl.Rectangle boxRect = new rl.Rectangle(8,Program.GameHeight - 84, Program.GameWidth - 16, Program.GameHeight/4);
+        public rl.Rectangle boxRect = new rl.Rectangle(8,Program.GameHeight - 64, Program.GameWidth - 16, Program.GameHeight/4);
         public int LetterCount = 0;
+        public int Modifier = 0;
+
+        public float TypeWritterTimer = 0;
+
+        Random rand = new Random();
+
+        public DialougeBox()
+        {
+ 
+        }
 
         public void DrawDialougeBox()
         {
@@ -40,9 +50,10 @@ namespace Project2D.TankGame
             if(LetterCount >= mess.Length-1)
             {
                 //Go to next message
-                if(IsKeyPressed(KeyboardKey.KEY_Z))
+                if(IsKeyPressed(KeyboardKey.KEY_SPACE) || IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
                 {
                     CurrentMessage++;
+                    LetterCount = 0;
                     if(CurrentMessage >= Messages.Count)
                     {
                         Visible = false;
@@ -51,13 +62,30 @@ namespace Project2D.TankGame
             }
             else //TypeWritter Effect
             {
-                LetterCount = Numbers.Approach(LetterCount,mess.Length-1,1);
-            }
+                if (IsKeyDown(KeyboardKey.KEY_SPACE) || IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON))
+                {
+                    TypeWritterTimer = 3; 
+                }
 
+                    if (TypeWritterTimer > 2)
+                {
+                    LetterCount = Numbers.Approach(LetterCount, mess.Length - 1, 1);
+                    TypeWritterTimer = 0;
+                }
+                TypeWritterTimer++;
+            }
+            Modifier = 0;
             //Draw Text
             for (int i = 0; i <= LetterCount; i++)
             {
                 char currentChar = mess[i];
+
+                if(currentChar == '/')
+                {
+                    Int32.TryParse(mess[i + 1].ToString(),out Modifier);
+                    i += 2;
+                    if (i > LetterCount) break;
+                }
 
                 float temp = 0;
                 int length = 0;
@@ -83,7 +111,33 @@ namespace Project2D.TankGame
                 i -= length;
                 currentChar = mess[i];
 
-                DrawTextEx(fnt, currentChar.ToString(), new rl.Vector2(topLeft.x + CharWidth, topLeft.y + (12 * YLine)),12,1,Color.BLACK);
+                switch(Modifier) // System does not scale at all
+                {
+                    case 0: // Normal Draw
+                    {
+                        DrawTextEx(fnt, currentChar.ToString(), new rl.Vector2(topLeft.x + CharWidth, topLeft.y + (12 * YLine)), 12, 1, Color.BLACK);
+                        break;
+                    }
+
+                    case 1: // ShakeyDraw
+                    {
+                        DrawTextEx(fnt, currentChar.ToString(), new rl.Vector2(topLeft.x + CharWidth + rand.Next(-1,1), topLeft.y + (12 * YLine) + rand.Next(-1, 1)), 12, 1, Color.BLACK);
+                        break;
+                    }
+
+                    case 2: // Blue Draw
+                    {
+                        DrawTextEx(fnt, currentChar.ToString(), new rl.Vector2(topLeft.x + CharWidth, topLeft.y + (12 * YLine)), 12, 1, Color.DARKBLUE);
+                        break;
+                    }
+
+                    case 3: // Gray Draw
+                    {
+                        DrawTextEx(fnt, currentChar.ToString(), new rl.Vector2(topLeft.x + CharWidth, topLeft.y + (12 * YLine)), 12, 1, Color.LIGHTGRAY);
+                        break;
+                    }
+                }
+                
                 CharWidth += MeasureTextEx(fnt, mess[i].ToString(), 12, 1).x+1;
             }
         }

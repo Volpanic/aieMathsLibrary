@@ -27,7 +27,7 @@ namespace Project2D.TankGame
         public Texture2D GunSprite;
         public Vector2 GunOrigin;
         public float GunRotation = 0.0f;
-        public int BulletAmount = 20;
+        public int BulletAmount = 1;
         float BulletTimer = 0;
         float BulletTimerMax = 10;
         float TredTimer = 0;
@@ -78,8 +78,8 @@ namespace Project2D.TankGame
                 if (TredTimer > 5)
                 {
                     TredTimer = TredTimer % 5;
-                    Vector2 tred1 = new Vector2((2) * (float)Math.Cos(Rotation),(+4) * (float)Math.Sin(Rotation));
-                    Vector2 tred2 = new Vector2((2) * (float)Math.Cos(Rotation),(-4) * (float)Math.Sin(Rotation));
+                    Vector2 tred1 = new Vector2((4) * (float)Math.Cos(Rotation),(+4) * (float)Math.Sin(Rotation));
+                    Vector2 tred2 = new Vector2((-4) * (float)Math.Cos(Rotation),(-4) * (float)Math.Sin(Rotation));
                     tred1 += Position;
                     tred2 += Position;
                     gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred1, Vector2.Zero, Rotation,true, 60));

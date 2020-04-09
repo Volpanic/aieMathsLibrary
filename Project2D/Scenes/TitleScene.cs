@@ -31,7 +31,7 @@ namespace Project2D.Scenes
         public TitleScene(Game _game) : base(_game)
         {
             dialougeBox = new DialougeBox();
-            dialougeBox.Messages.Add("Test message box, and anothe rtesaghsrhgs shfshshsf sfh fh wsfh sfh s hsf hsfh sfhsfh.");
+            dialougeBox.Messages.Add("Blank Text Box");
         }
 
         public override void Update()

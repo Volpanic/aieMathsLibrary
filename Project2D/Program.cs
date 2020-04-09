@@ -32,7 +32,7 @@ namespace Project2D
 
             //load
             Romulus = LoadFont("resources/fonts/romulus.png");
-
+            InitAudioDevice();
             game.Init();
 
             while (!WindowShouldClose())
@@ -62,6 +62,7 @@ namespace Project2D
 
             //unload
             UnloadFont(Romulus);
+            CloseAudioDevice();
 
             game.Shutdown();
 

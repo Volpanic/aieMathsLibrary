@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
+    <Compile Include="TankGame\Boss\SpindleBullet.cs" />
+    <Compile Include="TankGame\Boss\Spindle.cs" />
     <Compile Include="TankGame\Component.cs" />
     <Compile Include="TankGame\DialougeBox.cs" />
     <Compile Include="TankGame\MathMore.cs" />
@@ -74,6 +76,15 @@
     <Content Include="Resources\Fonts\romulus.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Sprites\spr_snow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sprites\spr_spindle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sprites\spr_spin_bullet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sprites\spr_tank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -83,6 +94,9 @@
     <Content Include="Resources\Sprites\spr_tred.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Audio\" />
   </ItemGroup>
   <Import Project="..\Raylib\Bindings\Raylib.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

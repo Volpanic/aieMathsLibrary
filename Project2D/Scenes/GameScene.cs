@@ -14,18 +14,31 @@ using System.Diagnostics;
 namespace Project2D.Scenes
 {
     using MathClasses;
+    using Project2D.TankGame.Boss;
+    using Project2D.TankGame.Particles;
     using Project2D.TankGame.Tiles;
 
     public class GameScene : Scene
     {
+        //Game Items
         public PlayerTank player;
-        public List<PlayerBullet> PlayerBullets = new List<PlayerBullet>();
         public TileGrid tileGrid;
+        public DialougeBox dialougeBox;
+        public Spindle spindleBoss;
+
+        public List<PlayerBullet> PlayerBullets = new List<PlayerBullet>();
+        public List<SpindleBullet> SpindleBullets = new List<SpindleBullet>();
+
+        Random rand = new Random();
+        public Texture2D SnowTexture;
+        
 
         public GameScene(Game _game) : base(_game)
         {
             player = new PlayerTank(this);
             player.Position = new Vector2(Program.GameWidth / 2, Program.GameHeight / 2);
+
+            spindleBoss = new Spindle(this);
 
             //SetupTileGrid
 
@@ -56,32 +69,75 @@ namespace Project2D.Scenes
             }
 
             tileGrid = new TileGrid(tempGrid,16,16);
+            dialougeBox = new DialougeBox();
+            dialougeBox.Visible = false;
+            //SnowTexture = LoadTexture(Path.Combine("Resources", "Sprites", "spr_snow.png"));
         }
 
         public override void Update()
         {
-            player.Update();
-
-            //Roll through Player Bullets updates
-            for(int i  = 0; i < PlayerBullets.Count; i++)
+            if (!dialougeBox.Visible)
             {
-                PlayerBullets[i].Update();
+                player.Update();
+                spindleBoss.Update();
 
-                //Destroy if need to.
-                if(PlayerBullets[i].Active == false)
+                //Roll through Player Bullets updates
+                for (int i = 0; i < PlayerBullets.Count; i++)
                 {
-                    PlayerBullets.RemoveAt(i);
-                    i--;
+                    PlayerBullets[i].Update();
+
+                    //Hurt Boss
+                    if(PlayerBullets[i].GetCollisionRectangle().CollidingWith(spindleBoss.GetCollisionRectangle()))
+                    {
+                        spindleBoss.SpindleHit();
+                        PlayerBullets[i].Active = false;
+                    }
+
+                    //Destroy if need to.
+                    if (PlayerBullets[i].Active == false)
+                    {
+                        PlayerBullets.RemoveAt(i);
+                        i--;
+                    }
+                }
+
+                for (int i = 0; i < SpindleBullets.Count; i++)
+                {
+                    SpindleBullets[i].Update();
+
+                    //Hurt Boss
+                    if (SpindleBullets[i].GetCollisionRectangle().CollidingWith(player.GetCollisionRectangle()))
+                    {
+                        //spindleBoss.SpindleHit();
+                        SpindleBullets[i].Active = false;
+                    }
+
+                    //Destroy if need to.
+                    if (SpindleBullets[i].Active == false)
+                    {
+                        SpindleBullets.RemoveAt(i);
+                        i--;
+                    }
+                }
+
+                //Temp
+                if (IsMouseButtonDown(MouseButton.MOUSE_RIGHT_BUTTON))
+                {
+                    Vector2 pos = player.MousePos;
+                    pos = new Vector2((float)Math.Floor(pos.x / 16), (float)Math.Floor(pos.y / 16));
+
+                    tileGrid.TileGridValues[(int)pos.x, (int)pos.y] = 1;
+                }
+
+                //CreateSnow
+                for (int i = 0; i < rand.Next(2, 5); i++)
+                {
+                    partSystem.PartList.Add(new Particle(this, SnowTexture, new Vector2(rand.Next(0, Program.GameWidth), -4), new Vector2(-1, 2), 0.0f, true));
                 }
             }
-
-            //Temp
-            if(IsMouseButtonDown(MouseButton.MOUSE_RIGHT_BUTTON))
+            else
             {
-                Vector2 pos = player.MousePos;
-                pos = new Vector2((float)Math.Floor(pos.x/16), (float)Math.Floor(pos.y / 16));
-
-                tileGrid.TileGridValues[(int)pos.x,(int)pos.y] = 1;
+            
             }
         }
 
@@ -92,13 +148,20 @@ namespace Project2D.Scenes
 
             partSystem.Draw();
             player.Draw();
+            spindleBoss.Draw();
 
             //loop through Player Bullets Draw
             for (int i = 0; i < PlayerBullets.Count; i++)
             {
                 PlayerBullets[i].Draw();
             }
-            
+
+            for (int i = 0; i < SpindleBullets.Count; i++)
+            {
+                SpindleBullets[i].Draw();
+            }
+
+            dialougeBox.DrawDialougeBox();
         }
     }
 }
