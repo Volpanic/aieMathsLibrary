@@ -107,6 +107,14 @@ namespace Project2D.TankGame
 
             bool KeyForward = IsKeyDown(KeyboardKey.KEY_SPACE); // Move Forward
             bool KeyBackWard = IsKeyDown(KeyboardKey.KEY_X); // Move Backward
+            bool KeyShift = IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT); // Slow Down
+
+            float MaxSpeed = 2;
+
+            if(KeyShift)
+            {
+                MaxSpeed = 1;
+            }
 
             //Rotation
             if (KeyRight)
@@ -123,13 +131,13 @@ namespace Project2D.TankGame
             if (KeyForward)
             {
                 Velocity = new Vector2((float)Math.Cos(Rotation * DEG2RAD), (float)Math.Sin(Rotation * DEG2RAD));
-                Speed = Numbers.Approach(Speed, 2, 0.11f);
+                Speed = Numbers.Approach(Speed, MaxSpeed, 0.11f);
             }
 
             if (KeyBackWard)
             {
                 Velocity = new Vector2(-(float)Math.Cos(Rotation * DEG2RAD), -(float)Math.Sin(Rotation * DEG2RAD));
-                Speed = Numbers.Approach(Speed, 2, 0.11f);
+                Speed = Numbers.Approach(Speed, MaxSpeed, 0.11f);
             }
 
             if ((KeyBackWard && KeyForward) || (!KeyBackWard && !KeyForward))

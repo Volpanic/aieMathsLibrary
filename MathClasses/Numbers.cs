@@ -33,5 +33,14 @@ namespace MathClasses
             }
             return value;
         }
+
+        public static float SinWave(float from, float to, float duration, float offset, float timer)
+        {
+            float a4 = (to - from) * 0.5f;
+
+            float si = from + a4 + (float)Math.Sin((((timer * 0.01f) + duration * offset) / duration) * ((float)Math.PI * 2.0f)) * a4;
+
+            return si;
+        }
     }
 }

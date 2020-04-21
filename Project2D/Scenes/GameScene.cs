@@ -36,7 +36,7 @@ namespace Project2D.Scenes
         public GameScene(Game _game) : base(_game)
         {
             player = new PlayerTank(this);
-            player.Position = new Vector2(Program.GameWidth / 2, Program.GameHeight / 2);
+            player.Position = new Vector2(Program.GameWidth / 4, Program.GameHeight / 2);
 
             spindleBoss = new Spindle(this);
 
@@ -144,11 +144,7 @@ namespace Project2D.Scenes
         public override void Draw()
         {
             
-            tileGrid.DrawTiles();
-
             partSystem.Draw();
-            player.Draw();
-            spindleBoss.Draw();
 
             //loop through Player Bullets Draw
             for (int i = 0; i < PlayerBullets.Count; i++)
@@ -160,6 +156,15 @@ namespace Project2D.Scenes
             {
                 SpindleBullets[i].Draw();
             }
+
+            
+            player.Draw();
+
+            tileGrid.DrawTiles();
+
+            spindleBoss.Draw();
+
+            
 
             dialougeBox.DrawDialougeBox();
         }

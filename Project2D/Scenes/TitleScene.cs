@@ -23,15 +23,12 @@ namespace Project2D.Scenes
         public int MenuTimer = 0;
         public bool MenuTran = false;
 
-        public DialougeBox dialougeBox;
-
         //Raylibs not really meant to use a vector class other than it's own
         //For the menu i'm using the base vector2 class but ill use my library for the player...
 
         public TitleScene(Game _game) : base(_game)
         {
-            dialougeBox = new DialougeBox();
-            dialougeBox.Messages.Add("Blank Text Box");
+
         }
 
         public override void Update()
@@ -61,30 +58,9 @@ namespace Project2D.Scenes
             }
         }
 
-        CollisionShape P1 = new CollisionShape(6, new MathClasses.Vector2(32,32),0,16);
-        CollisionShape P2 = new CollisionShape(6, new MathClasses.Vector2(16, 16), 0, 16);
-
         public override void Draw()
         {
             MenuTimer++;
-
-            P2.Position = PlayerTank.GetRelativeMousePosition();
-            P2.Rotation += (float)Math.PI / 64;
-
-            int i = 0;
-            for(i = 0; i < P1.Points.Count-1; i++)
-            {
-                DrawLineEx(MathMore.toVector2(P1.Points[i]), MathMore.toVector2(P1.Points[i+1]),2,Color.BLACK);
-            }
-
-            DrawLineEx(MathMore.toVector2(P1.Points[i]), MathMore.toVector2(P1.Points[0]), 2, Color.BLACK);
-
-            for (i = 0; i < P2.Points.Count - 1; i++)
-            {
-                DrawLineEx(MathMore.toVector2(P2.Points[i]), MathMore.toVector2(P2.Points[i + 1]), 1, Color.BLACK);
-            }
-
-            DrawLineEx(MathMore.toVector2(P2.Points[i]), MathMore.toVector2(P2.Points[0]), 1, CollisionShape.Intersect(P1,P2)? Color.GREEN : Color.RED);
 
             switch (MenuPhase)
             {
@@ -94,8 +70,6 @@ namespace Project2D.Scenes
                     break;
                 }
             }
-
-            dialougeBox.DrawDialougeBox();
         }
 
         public void PressStartButtonMenuPhase()
