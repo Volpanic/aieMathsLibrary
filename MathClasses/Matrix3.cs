@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathClasses
 {
@@ -31,7 +27,7 @@ namespace MathClasses
             m7 = _m7; m8 = _m8; m9 = _m9;
         }
 
-        public void SetScale(float _x, float _y , float _z)
+        public void SetScale(float _x, float _y, float _z)
         {
             m1 = _x; m2 = 0; m3 = 0;
             m4 = 0; m5 = _y; m6 = 0;
@@ -61,7 +57,7 @@ namespace MathClasses
             float n8 = (a.m7 * b.m2) + (a.m8 * b.m5) + (a.m9 * b.m8);
             float n9 = (a.m7 * b.m3) + (a.m8 * b.m6) + (a.m9 * b.m9);
 
-            mat.Set(n1,n2,n3,n4,n5,n6,n7,n8,n9);
+            mat.Set(n1, n2, n3, n4, n5, n6, n7, n8, n9);
 
             return mat;
         }
@@ -110,7 +106,7 @@ namespace MathClasses
         public void SetRotateY(float radians)
         {
             Set((float)Math.Cos(radians), 0, (float)-Math.Sin(radians),
-                0,1,0,
+                0, 1, 0,
                 (float)Math.Sin(radians), 0, (float)Math.Cos(radians));
         }
 

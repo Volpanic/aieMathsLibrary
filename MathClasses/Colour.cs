@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathClasses
 {
@@ -11,7 +7,7 @@ namespace MathClasses
 
         public UInt32 colour { get; set; }
 
-        public Colour(byte r = 0,byte g = 0, byte b = 0, byte a = 0)
+        public Colour(byte r = 0, byte g = 0, byte b = 0, byte a = 0)
         {
             colour |= (UInt32)(r << 24);
             colour |= (UInt32)(g << 16);
@@ -62,8 +58,8 @@ namespace MathClasses
         //Static Colours
         public static Colour White = new Colour(255, 255, 255, 255);
         public static Colour Black = new Colour(0, 0, 0, 0);
-        public static Colour Gray  = new Colour(24,34,42,255);
-        public static Colour Red   = new Colour(24, 34, 16, 255);
+        public static Colour Gray = new Colour(24, 34, 42, 255);
+        public static Colour Red = new Colour(24, 34, 16, 255);
 
     }
 }

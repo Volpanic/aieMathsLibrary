@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathClasses
 {
@@ -93,7 +89,7 @@ namespace MathClasses
         {
             Vector2 c = b - a;
 
-            return (float)Math.Atan2(c.y,c.x);
+            return (float)Math.Atan2(c.y, c.x);
         }
     }
 }

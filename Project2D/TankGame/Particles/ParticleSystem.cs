@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Project2D.Scenes;
-using Raylib;
-using static Raylib.Raylib;
+﻿using System.Collections.Generic;
 
 namespace Project2D.TankGame.Particles
 {
@@ -16,11 +8,11 @@ namespace Project2D.TankGame.Particles
 
         public void Draw()
         {
-            for(int i = 0; i < PartList.Count; i ++)
+            for (int i = 0; i < PartList.Count; i++)
             {
                 PartList[i].Draw();
 
-                if(!PartList[i].Active)
+                if (!PartList[i].Active)
                 {
                     PartList.RemoveAt(i);
                     i--;

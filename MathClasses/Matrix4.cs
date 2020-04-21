@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathClasses
 {
@@ -14,8 +10,8 @@ namespace MathClasses
         {
             m1 = 1; m2 = 0; m3 = 0; m4 = 0;
             m5 = 0; m6 = 1; m7 = 0; m8 = 0;
-            m9 = 0; m10= 0; m11= 1; m12= 0;
-            m13= 0; m14= 0; m15= 0; m16= 1;
+            m9 = 0; m10 = 0; m11 = 1; m12 = 0;
+            m13 = 0; m14 = 0; m15 = 0; m16 = 1;
         }
 
         public Matrix4(float _m1 = 0, float _m2 = 0, float _m3 = 0, float _m4 = 0, float _m5 = 0, float _m6 = 0, float _m7 = 0, float _m8 = 0, float _m9 = 0,
@@ -83,14 +79,14 @@ namespace MathClasses
             b.m12 *= vec.z;
             b.m16 *= vec.w;
 
-            return new Vector4((b.m1 + b.m5 + b.m9 + b.m13),(b.m2 + b.m6 + b.m10 + b.m14),(b.m3 + b.m7 + b.m11 + b.m15),(b.m4 + b.m8 + b.m12 + b.m16));
+            return new Vector4((b.m1 + b.m5 + b.m9 + b.m13), (b.m2 + b.m6 + b.m10 + b.m14), (b.m3 + b.m7 + b.m11 + b.m15), (b.m4 + b.m8 + b.m12 + b.m16));
         }
 
         //Multiplication 
         public static Matrix4 operator *(Matrix4 b, Matrix4 a) //Definatly wrong, will fix when i'm not a huge idiot.(might be a while...).
         {
             Matrix4 mat = new Matrix4();
-            float n1 = (a.m1 * b.m1) + (a.m2 * b.m5) + (a.m3 * b.m9)  + (a.m4 * b.m13);
+            float n1 = (a.m1 * b.m1) + (a.m2 * b.m5) + (a.m3 * b.m9) + (a.m4 * b.m13);
             float n2 = (a.m1 * b.m2) + (a.m2 * b.m6) + (a.m3 * b.m10) + (a.m4 * b.m14);
             float n3 = (a.m1 * b.m3) + (a.m2 * b.m7) + (a.m3 * b.m11) + (a.m4 * b.m15);
             float n4 = (a.m1 * b.m4) + (a.m2 * b.m8) + (a.m3 * b.m12) + (a.m4 * b.m16);
@@ -110,33 +106,33 @@ namespace MathClasses
             float n15 = (a.m13 * b.m3) + (a.m14 * b.m7) + (a.m15 * b.m11) + (a.m16 * b.m15);
             float n16 = (a.m13 * b.m4) + (a.m14 * b.m8) + (a.m15 * b.m12) + (a.m16 * b.m16);
 
-            mat.Set(n1, n2, n3, n4, n5, n6, n7, n8, n9,n10,n11,n12,n13,n14,n15,n16);
+            mat.Set(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16);
 
             return mat;
         }
 
         public void SetRotateX(float radians)
         {
-            Set(1, 0, 0,0,
-                0, (float)Math.Cos(radians), (float)Math.Sin(radians),0,
-                0, (float)-Math.Sin(radians), (float)Math.Cos(radians),0,
-                0,0,0,1);
+            Set(1, 0, 0, 0,
+                0, (float)Math.Cos(radians), (float)Math.Sin(radians), 0,
+                0, (float)-Math.Sin(radians), (float)Math.Cos(radians), 0,
+                0, 0, 0, 1);
         }
 
         public void SetRotateY(float radians)
         {
-            Set((float)Math.Cos(radians), 0, (float)-Math.Sin(radians),0,
+            Set((float)Math.Cos(radians), 0, (float)-Math.Sin(radians), 0,
                 0, 1, 0, 0,
-                (float)Math.Sin(radians), 0, (float)Math.Cos(radians),0,
-                0,0,0,1);
+                (float)Math.Sin(radians), 0, (float)Math.Cos(radians), 0,
+                0, 0, 0, 1);
         }
 
         public void SetRotateZ(float radians)
         {
-            Set((float)Math.Cos(radians), (float)Math.Sin(radians), 0,0,
-                (float)-Math.Sin(radians), (float)Math.Cos(radians), 0,0,
-                0, 0, 1,0,
-                0,0,0,1);
+            Set((float)Math.Cos(radians), (float)Math.Sin(radians), 0, 0,
+                (float)-Math.Sin(radians), (float)Math.Cos(radians), 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1);
         }
 
     }

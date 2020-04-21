@@ -1,6 +1,6 @@
-﻿using System;
+﻿using MathClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MathClasses;
+using System;
 
 namespace UnitTestProject
 {
@@ -390,7 +390,7 @@ namespace UnitTestProject
                                       0, 1, 0, 0,
                                       0, 0, 1, 0,
                                       55, 44, 99, 1);
-            
+
             Vector4 v4a = new Vector4(13.5f, -48.23f, -54, 1);
 
             Vector4 v4c = m4b * v4a;
@@ -410,7 +410,7 @@ namespace UnitTestProject
             Vector4 v4c = m4c * v4a;
             Assert.IsTrue(compare(v4c, new Vector4(86.0490112305f, 83.2981109619f, 45, 1)));
         }
-        
+
         [TestMethod]
         public void Vector3MatrixTranslation3()
         {
@@ -515,7 +515,7 @@ namespace UnitTestProject
 
             Assert.AreEqual<byte>(c.GetAlpha(), 0x78);
         }
-        
+
         [TestMethod]
         public void ColourSetRed()
         {

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MathClasses;
-using System.IO;
-using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib;
 
 namespace Project2D.TankGame
 {
@@ -20,10 +12,10 @@ namespace Project2D.TankGame
         private int MaxLifeTime = 120;
         private float LifeTimer = 0;
 
-        public SpindleBullet(GameScene _gS,Texture2D _sprite) : base(_gS)
+        public SpindleBullet(GameScene _gS, Texture2D _sprite) : base(_gS)
         {
             Sprite = _sprite;
-            Dimensions = new Vector2(Sprite.width,Sprite.height);
+            Dimensions = new Vector2(Sprite.width, Sprite.height);
             Origin = Dimensions / 2;
         }
 
@@ -34,7 +26,7 @@ namespace Project2D.TankGame
 
         public override Rectangle GetCollisionRectangle()
         {
-            Rectangle rect = new Rectangle((Position.x - Origin.x ) + 2,(Position.y - Origin.y) +2, Dimensions.x-2, Dimensions.y-2);
+            Rectangle rect = new Rectangle((Position.x - Origin.x) + 2, (Position.y - Origin.y) + 2, Dimensions.x - 2, Dimensions.y - 2);
 
             return rect;
         }
@@ -42,7 +34,7 @@ namespace Project2D.TankGame
         public override void Update()
         {
             //XCheck
-            if(gameScene.tileGrid.RectTileCollision(GetCollisionRectangle()))
+            if (gameScene.tileGrid.RectTileCollision(GetCollisionRectangle()))
             {
                 Active = false;
             }
@@ -57,7 +49,7 @@ namespace Project2D.TankGame
 
             LifeTimer += Game.deltaTime;
 
-            if(LifeTimer >= MaxLifeTime)
+            if (LifeTimer >= MaxLifeTime)
             {
                 Active = false;
             }
@@ -68,7 +60,7 @@ namespace Project2D.TankGame
             DrawSelf();
         }
 
-        
+
 
     }
 }

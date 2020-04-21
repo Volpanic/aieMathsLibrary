@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using static Raylib.Raylib;
-using MathClasses;
-using Project2D.Scenes;
-using Raylib;
+﻿using MathClasses;
 using Project2D.TankGame;
+using Raylib;
+using static Raylib.Raylib;
 
 namespace Project2D
 {
     class Program
     {
+        //Resolution Settings
         public const int GameWidth = 320;
         public const int GameHeight = 180;
-        public static int GameZoom = 4;
+        public static int GameZoom = 4; // Change for smaller or bigger window
 
         public static Font Romulus;
 
@@ -24,9 +18,10 @@ namespace Project2D
         {
             Game game = new Game();
 
-            InitWindow(GameWidth*GameZoom, GameHeight*GameZoom, "...");
+            InitWindow(GameWidth * GameZoom, GameHeight * GameZoom, "...");
             SetTargetFPS(60);
 
+            //Creates a base surface to draw the game too, Scaled up later
             RenderTexture2D AppSurface = LoadRenderTexture(GameWidth, GameHeight);
             SetTextureFilter(AppSurface.texture, TextureFilterMode.FILTER_POINT);
 
@@ -37,7 +32,6 @@ namespace Project2D
 
             while (!WindowShouldClose())
             {
-                //camera.offset -= new Vector2(1,1);
 
                 game.Update();
 
@@ -46,16 +40,15 @@ namespace Project2D
 
                 BeginTextureMode(AppSurface);
 
-                ClearBackground(MathMore.toRayColour(new Colour(255,255,255,1)));
+                ClearBackground(MathMore.toRayColour(new Colour(255, 255, 255, 1)));
                 ClearBackground(Color.WHITE);
 
                 game.Draw();
 
                 EndTextureMode();
+                //Draw Scaled Window
                 DrawRenderTexture(AppSurface);
                 EndMode2D();
-
-                DrawText(GetFPS().ToString(), 8, 8, 12, MathMore.toRayColour(new Colour(255, 0, 0, 1)));
 
                 EndDrawing();
             }
@@ -63,7 +56,6 @@ namespace Project2D
             //unload
             UnloadFont(Romulus);
             CloseAudioDevice();
-
             game.Shutdown();
 
             CloseWindow();

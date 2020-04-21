@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Raylib;
+﻿using Raylib;
 using static Raylib.Raylib;
-using MathClasses;
-using Project2D.Scenes;
-using Project2D.TankGame;
 
 using rl = Raylib;
 
@@ -35,7 +26,7 @@ namespace Project2D.Scenes
         {
             base.Update();
 
-            if(IsKeyPressed(KeyboardKey.KEY_Z))
+            if (IsKeyPressed(KeyboardKey.KEY_Z))
             {
                 MenuTran = true;
                 MenuTimer = 0;
@@ -44,15 +35,15 @@ namespace Project2D.Scenes
 
             if (MenuTran)
             {
-                switch(MenuPhase)
+                switch (MenuPhase)
                 {
                     case 0:
                     {
-                        if(MenuTimer > 60)
+                        if (MenuTimer > 60)
                         {
 
                         }
-                    break;
+                        break;
                     }
                 }
             }

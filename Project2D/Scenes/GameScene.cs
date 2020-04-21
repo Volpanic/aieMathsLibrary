@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using static Raylib.Raylib;
-using MathClasses;
-using Project2D.Scenes;
+﻿using Project2D.TankGame;
 using Raylib;
-using Project2D.TankGame;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using static Raylib.Raylib;
 
 namespace Project2D.Scenes
 {
@@ -31,19 +24,20 @@ namespace Project2D.Scenes
 
         Random rand = new Random();
         public Texture2D SnowTexture;
-        
+
 
         public GameScene(Game _game) : base(_game)
         {
+            //Set Player Pos
             player = new PlayerTank(this);
             player.Position = new Vector2(Program.GameWidth / 4, Program.GameHeight / 2);
 
+            //Create Boss
             spindleBoss = new Spindle(this);
 
-            //SetupTileGrid
-
+            //Setup Tile Grid
             int w = (int)Math.Ceiling((double)(Program.GameWidth / 16));
-            int h = (int)Math.Ceiling((double)(Program.GameHeight / 16))+1;
+            int h = (int)Math.Ceiling((double)(Program.GameHeight / 16)) + 1;
 
             int[,] tempGrid = new int[w, h];
 
@@ -53,7 +47,7 @@ namespace Project2D.Scenes
                 {
                     tempGrid[xx, yy] = 0;
                     //HoriWalls
-                    if(xx == 0 || xx == tempGrid.GetLength(0)-1)
+                    if (xx == 0 || xx == tempGrid.GetLength(0) - 1)
                     {
                         tempGrid[xx, yy] = 1;
                     }
@@ -68,14 +62,22 @@ namespace Project2D.Scenes
                 }
             }
 
-            tileGrid = new TileGrid(tempGrid,16,16);
+            tileGrid = new TileGrid(tempGrid, 16, 16);
+
+            //Create Dialouge Box, but don't show it
             dialougeBox = new DialougeBox();
             dialougeBox.Visible = false;
-            //SnowTexture = LoadTexture(Path.Combine("Resources", "Sprites", "spr_snow.png"));
+        }
+
+        public override void EndScene()
+        {
+            player.OnDestroy();
+            spindleBoss.OnDestroy();
         }
 
         public override void Update()
         {
+            //Update everything unless dialouge box is showing
             if (!dialougeBox.Visible)
             {
                 player.Update();
@@ -87,7 +89,7 @@ namespace Project2D.Scenes
                     PlayerBullets[i].Update();
 
                     //Hurt Boss
-                    if(PlayerBullets[i].GetCollisionRectangle().CollidingWith(spindleBoss.GetCollisionRectangle()))
+                    if (PlayerBullets[i].GetCollisionRectangle().CollidingWith(spindleBoss.GetCollisionRectangle()))
                     {
                         spindleBoss.SpindleHit();
                         PlayerBullets[i].Active = false;
@@ -101,6 +103,7 @@ namespace Project2D.Scenes
                     }
                 }
 
+                //Loop spindle bullets (Boss Bullets)
                 for (int i = 0; i < SpindleBullets.Count; i++)
                 {
                     SpindleBullets[i].Update();
@@ -119,31 +122,16 @@ namespace Project2D.Scenes
                         i--;
                     }
                 }
-
-                //Temp
-                if (IsMouseButtonDown(MouseButton.MOUSE_RIGHT_BUTTON))
-                {
-                    Vector2 pos = player.MousePos;
-                    pos = new Vector2((float)Math.Floor(pos.x / 16), (float)Math.Floor(pos.y / 16));
-
-                    tileGrid.TileGridValues[(int)pos.x, (int)pos.y] = 1;
-                }
-
-                //CreateSnow
-                for (int i = 0; i < rand.Next(2, 5); i++)
-                {
-                    partSystem.PartList.Add(new Particle(this, SnowTexture, new Vector2(rand.Next(0, Program.GameWidth), -4), new Vector2(-1, 2), 0.0f, true));
-                }
             }
             else
             {
-            
+
             }
         }
 
         public override void Draw()
         {
-            
+            //Draw Paticles
             partSystem.Draw();
 
             //loop through Player Bullets Draw
@@ -157,14 +145,10 @@ namespace Project2D.Scenes
                 SpindleBullets[i].Draw();
             }
 
-            
+
             player.Draw();
-
             tileGrid.DrawTiles();
-
             spindleBoss.Draw();
-
-            
 
             dialougeBox.DrawDialougeBox();
         }

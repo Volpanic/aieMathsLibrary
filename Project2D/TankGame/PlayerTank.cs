@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using Project2D.Scenes;
 using Raylib;
+using System;
+using System.IO;
 using static Raylib.Raylib;
-using MathClasses;
-using Project2D.Scenes;
-using Project2D.TankGame;
-
-using rl = Raylib;
 
 namespace Project2D.TankGame
 {
@@ -48,8 +40,9 @@ namespace Project2D.TankGame
 
         public override void Create()
         {
-            Sprite = LoadTexture(Path.Combine("Resources","Sprites","spr_tank.png")); // Set to tank sprite
-            Dimensions = new Vector2(Sprite.width,Sprite.height); // Sets sprite width and height
+            //Load Sprites
+            Sprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_tank.png")); // Set to tank sprite
+            Dimensions = new Vector2(Sprite.width, Sprite.height); // Sets sprite width and height
             Origin = Dimensions / 2; // Centers the sprite
             TredSprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_tred.png"));
 
@@ -71,33 +64,35 @@ namespace Project2D.TankGame
             PlayerMovement();
             PlayerCollision();
 
-            if(Speed != 0)
+            //Create Tred particles
+            if (Speed != 0)
             {
                 TredTimer += Game.deltaTime;
 
                 if (TredTimer > 5)
                 {
                     TredTimer = TredTimer % 5;
-                    Vector2 tred1 = new Vector2((4) * (float)Math.Cos(Rotation),(+4) * (float)Math.Sin(Rotation));
-                    Vector2 tred2 = new Vector2((-4) * (float)Math.Cos(Rotation),(-4) * (float)Math.Sin(Rotation));
+                    Vector2 tred1 = new Vector2((4) * (float)Math.Cos(Rotation), (+4) * (float)Math.Sin(Rotation));
+                    Vector2 tred2 = new Vector2((-4) * (float)Math.Cos(Rotation), (-4) * (float)Math.Sin(Rotation));
                     tred1 += Position;
                     tred2 += Position;
-                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred1, Vector2.Zero, Rotation,true, 60));
-                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred2, Vector2.Zero, Rotation,true, 60));
+                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred1, Vector2.Zero, Rotation, true, 60));
+                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred2, Vector2.Zero, Rotation, true, 60));
                 }
             }
 
             GunUpdate();
-
         }
 
+        //Slightly smaller hitbox
         public override Rectangle GetCollisionRectangle()
         {
-            Rectangle rect = new Rectangle((Position.x - Origin.x) + 2, (Position.y - Origin.y) + 2,Dimensions.x-2, Dimensions.y-2);
+            Rectangle rect = new Rectangle((Position.x - Origin.x) + 2, (Position.y - Origin.y) + 2, Dimensions.x - 2, Dimensions.y - 2);
 
             return rect;
         }
 
+        //Move Player
         public void PlayerMovement()
         {
             float rotSpeed = (float)Math.PI;
@@ -111,7 +106,7 @@ namespace Project2D.TankGame
 
             float MaxSpeed = 2;
 
-            if(KeyShift)
+            if (KeyShift)
             {
                 MaxSpeed = 1;
             }
@@ -149,7 +144,6 @@ namespace Project2D.TankGame
         public void PlayerCollision()
         {
             Rectangle ColRect = GetCollisionRectangle();
-
             Vector2 actualVel = (Velocity * Speed) * (Game.deltaTime);
 
             //X Collision
@@ -194,14 +188,14 @@ namespace Project2D.TankGame
         public override void Draw()
         {
             DrawSelf();
-
             GunDraw();
         }
 
         ////////////////
         public void GunUpdate()
         {
-            GunRotation = Vector2.Direction(Position,MousePos);
+            //Rotate gun towards mouse
+            GunRotation = Vector2.Direction(Position, MousePos);
 
             bool BulletShoot = IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON);
             float Speed = 5;
@@ -210,13 +204,14 @@ namespace Project2D.TankGame
 
             BulletTimer += Game.deltaTime;
 
-            if(BulletTimer >= BulletTimerMax && BulletShoot)
+            //Shoot
+            if (BulletTimer >= BulletTimerMax && BulletShoot)
             {
                 BulletTimer = BulletTimer % BulletTimerMax;
 
                 float dirCone = 0 + (((float)Math.PI / 32.0f) * BulletAmount);
-                dirCone = Math.Min(dirCone, (float)Math.PI *0.25f);
-                for(int b = 0; b < BulletAmount; b++)
+                dirCone = Math.Min(dirCone, (float)Math.PI * 0.25f);
+                for (int b = 0; b < BulletAmount; b++)
                 {
                     PlayerBullet pb = new PlayerBullet(gameScene);
 
@@ -233,10 +228,10 @@ namespace Project2D.TankGame
 
         public void GunDraw()
         {
-            Rectangle ImageRect = new Rectangle(0,0,GunSprite.width,GunSprite.height); // Image rectangle (Whole Image)
-            Rectangle DestRect = new Rectangle(Position.x,Position.y,ImageRect.width,ImageRect.height); // World Rect
+            Rectangle ImageRect = new Rectangle(0, 0, GunSprite.width, GunSprite.height); // Image rectangle (Whole Image)
+            Rectangle DestRect = new Rectangle(Position.x, Position.y, ImageRect.width, ImageRect.height); // World Rect
 
-            DrawTexturePro(GunSprite,MathMore.toRayRect(ImageRect),MathMore.toRayRect(DestRect),new Raylib.Vector2(GunOrigin.x,GunOrigin.y),GunRotation * RAD2DEG,Color.WHITE);
+            DrawTexturePro(GunSprite, MathMore.toRayRect(ImageRect), MathMore.toRayRect(DestRect), new Raylib.Vector2(GunOrigin.x, GunOrigin.y), GunRotation * RAD2DEG, Color.WHITE);
 
             DrawCircleLines((int)MousePos.x, (int)MousePos.y, 3, Color.BLACK);
         }

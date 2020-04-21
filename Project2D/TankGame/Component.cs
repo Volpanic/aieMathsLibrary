@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Raylib;
+﻿using Raylib;
 using static Raylib.Raylib;
-using MathClasses;
-using Project2D.Scenes;
-using Project2D.TankGame;
-
-using rl = Raylib;
 
 namespace Project2D.TankGame
 {
@@ -39,7 +28,7 @@ namespace Project2D.TankGame
             Rotation = 0.0f;
             Origin = Vector2.Zero;
             Dimensions = Vector2.Zero;
-            Scale = new Vector2(1,1);
+            Scale = new Vector2(1, 1);
 
             gameScene = _gameScene;
 
@@ -58,51 +47,37 @@ namespace Project2D.TankGame
         public virtual void Draw() { }
         public virtual void OnDestroy() { } //Called when an objects Alive is set to false (Called from the scene running the code)
 
-        public virtual Rectangle GetCollisionRectangle()
+        public virtual Rectangle GetCollisionRectangle() // Returns a collision rectangle
         {
             Rectangle rect = new Rectangle(Position.x - Origin.x, Position.y - Origin.y, Dimensions.x, Dimensions.y);
 
             return rect;
         }
 
-        public virtual Rectangle InEditor()
-        { 
-            Rectangle destRectangle = new Rectangle(Position.x + Origin.x, Position.y + Origin.y, Dimensions.x, Dimensions.y);
-            Rectangle imageRect = new Rectangle(0, 0, Dimensions.x + 1, Dimensions.y);
-            DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x, Origin.y), Rotation, Color.WHITE);
-            DrawRectangleLinesEx(MathMore.toRayRect(new Rectangle(Position.x, Position.y, Dimensions.x, Dimensions.y)), 1, Color.DARKPURPLE);
-
-            destRectangle.x -= Origin.x;
-            destRectangle.y -= Origin.y;
-
-            return destRectangle;
-        }
-
-
-        public void DrawSelf() // Default draw, draws sprite sheet cells
+        public void DrawSelf() // Default draw, draws sprites from a sprite sheet( Which isn't actually used in game)
         {
             Rectangle destRectangle = new Rectangle(Position.x, Position.y, Dimensions.x * Scale.x, Dimensions.y * Scale.y); // Scales the drawn image
 
-            if (new Vector2(Sprite.width,Sprite.height) == Dimensions) //Draw flat sprite, i.e not a sprite sheet
+            if (new Vector2(Sprite.width, Sprite.height) == Dimensions) //Draw flat sprite, i.e not a sprite sheet
             {
                 // new Raylib.Vector2 was the best work around i could find, i could use the basic draw class
                 // but that doesnt allow rotation and stuff
 
-                Rectangle imageRect = new Rectangle(0, 0, Dimensions.x+1, Dimensions.y);
+                Rectangle imageRect = new Rectangle(0, 0, Dimensions.x + 1, Dimensions.y);
                 DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x, Origin.y), Rotation, Blend);
             }
             else
             {
                 float sheetXPos = Dimensions.x * ImageIndex;
 
-                if(sheetXPos > Sprite.width) // Sets the animation back to first frame
+                if (sheetXPos > Sprite.width) // Sets the animation back to first frame
                 {
                     sheetXPos = 0;
                     ImageIndex = 0;
                 }
 
-                Rectangle imageRect = new Rectangle(sheetXPos,0,Dimensions.x+1,Dimensions.y);
-                DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x,Origin.y),Rotation, Blend);
+                Rectangle imageRect = new Rectangle(sheetXPos, 0, Dimensions.x + 1, Dimensions.y);
+                DrawTexturePro(Sprite, MathMore.toRayRect(imageRect), MathMore.toRayRect(destRectangle), new Raylib.Vector2(Origin.x, Origin.y), Rotation, Blend);
             }
         }
     }

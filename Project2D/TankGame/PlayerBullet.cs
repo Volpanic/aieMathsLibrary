@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MathClasses;
-using System.IO;
-using Raylib;
+﻿using Raylib;
 using static Raylib.Raylib;
 
 namespace Project2D.TankGame
@@ -33,7 +26,7 @@ namespace Project2D.TankGame
         public override void Update()
         {
             //XCheck
-            if(gameScene.tileGrid.RectTileCollision(new Rectangle(Position.x-2 + (Velocity * Game.deltaTime).x,Position.y-2,2,2)))
+            if (gameScene.tileGrid.RectTileCollision(new Rectangle(Position.x - 2 + (Velocity * Game.deltaTime).x, Position.y - 2, 2, 2)))
             {
                 Active = false;
             }
@@ -48,7 +41,7 @@ namespace Project2D.TankGame
 
             LifeTimer += Game.deltaTime;
 
-            if(LifeTimer >= MaxLifeTime)
+            if (LifeTimer >= MaxLifeTime)
             {
                 Active = false;
             }
@@ -56,10 +49,11 @@ namespace Project2D.TankGame
 
         public override void Draw()
         {
-            DrawCircleV(new Raylib.Vector2(Position.x,Position.y),2,Color.BLACK);
+            //Draw Bullet
+            DrawCircleV(new Raylib.Vector2(Position.x, Position.y), 2, Color.BLACK);
         }
 
-        
+
 
     }
 }

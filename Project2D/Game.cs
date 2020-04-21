@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using static Raylib.Raylib;
-using MathClasses;
-using Project2D.Scenes;
+﻿using Project2D.Scenes;
 using Raylib;
-using Project2D.TankGame;
+using System;
 using System.Diagnostics;
+using static Raylib.Raylib;
 
 namespace Project2D
 {
@@ -20,17 +13,16 @@ namespace Project2D
         private long currentTime = 0;
         private long lastTime = 0;
         private float timer = 0;
-        private int fps = 1;
         private int frames;
 
         public static float cleandeltaTime = 0.005f;
-        public static float deltaTime { get {return (cleandeltaTime * 60); }}
+        public static float deltaTime { get { return (cleandeltaTime * 60); } }
 
         private Scene currentRunningScene;
         private Scene nextScene = null;
 
         private byte transitionAlpha = 0;
-        private bool  isTransistioning = false;
+        private bool isTransistioning = false;
 
         public Scene CurrentGameScene { get { return currentRunningScene; } set { SetNextScene(value); } }
 
@@ -41,6 +33,7 @@ namespace Project2D
 
         private void SetNextScene(Scene _scene)
         {
+            //Resets Scene Transition
             isTransistioning = true;
             transitionAlpha = 0;
             nextScene = _scene;
@@ -57,41 +50,41 @@ namespace Project2D
             }
         }
 
+        //End Of Game
         public void Shutdown()
         {
+            currentRunningScene.EndScene();
         }
 
         public void Update()
         {
+            //DeltaTime
             lastTime = currentTime;
             currentTime = stopwatch.ElapsedMilliseconds;
             cleandeltaTime = (currentTime - lastTime) / 1000.0f;
             timer += deltaTime;
             if (timer >= 1)
             {
-                fps = frames;
                 frames = 0;
                 timer -= 1;
             }
             frames++;
 
-            // insert game logic here   
+            //Game Running   
             currentRunningScene.Update();
         }
 
         public void Draw()
         {
-
+            //Game Draw
             currentRunningScene.Draw();
-
-            DrawText((Game.deltaTime).ToString(),16,32,12,Color.GREEN);
 
             Color tranColor = Color.BLACK;
 
             //Transition Scenes
-            if(isTransistioning)
+            if (isTransistioning)
             {
-                if(transitionAlpha < 255)
+                if (transitionAlpha < 255)
                 {
                     transitionAlpha += 5;
                 }
@@ -112,7 +105,7 @@ namespace Project2D
 
             tranColor.a = transitionAlpha;
 
-            DrawRectangle(0,0,Program.GameWidth,Program.GameHeight,tranColor); 
+            DrawRectangle(0, 0, Program.GameWidth, Program.GameHeight, tranColor);
         }
 
     }

@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using MathClasses;
+using System;
 using static Raylib.Raylib;
-using MathClasses;
-using Project2D.Scenes;
-
-using rl = Raylib;
 
 
 namespace Project2D.TankGame.Tiles
@@ -23,7 +15,6 @@ namespace Project2D.TankGame.Tiles
         public TileGrid(int[,] _tileGrid, int _cellWidth = 16, int _cellHeight = 16)
         {
             TileGridValues = _tileGrid;
-
             CellWidth = _cellWidth;
             CellHeight = _cellHeight;
         }
@@ -31,13 +22,13 @@ namespace Project2D.TankGame.Tiles
         public void DrawTiles()
         {
             for (int xx = 0; xx < TileGridValues.GetLength(0); xx++)
-            { 
+            {
                 for (int yy = 0; yy < TileGridValues.GetLength(1); yy++)
                 {
-                    if(TileGridValues[xx,yy] == 1)
+                    if (TileGridValues[xx, yy] == 1)
                     {
                         DrawRectangleRec(MathMore.toRayRect(new Rectangle(xx * CellWidth, yy * CellHeight, CellWidth, CellHeight)), MathMore.toRayColour(Colour.Gray));
-                        DrawRectangleLinesEx(MathMore.toRayRect(new Rectangle(xx*CellWidth,yy*CellHeight,CellWidth,CellHeight)),2,MathMore.toRayColour(Colour.Black));
+                        DrawRectangleLinesEx(MathMore.toRayRect(new Rectangle(xx * CellWidth, yy * CellHeight, CellWidth, CellHeight)), 2, MathMore.toRayColour(Colour.Black));
                     }
                 }
             }
@@ -52,11 +43,11 @@ namespace Project2D.TankGame.Tiles
             float maxx = (float)Math.Ceiling((rect.x + rect.width) / CellWidth) + 1;
             float maxy = (float)Math.Ceiling((rect.y + rect.height) / CellHeight) + 1;
 
-            Vector2 min = new Vector2(minx,miny);
-            Vector2 max = new Vector2(maxx,maxy);
+            Vector2 min = new Vector2(minx, miny);
+            Vector2 max = new Vector2(maxx, maxy);
 
             //Set range of tile view
-            float MinSpaceX = Math.Max(min.x,0);
+            float MinSpaceX = Math.Max(min.x, 0);
             float MinSpaceY = Math.Max(min.y, 0);
 
             float MaxSpaceX = Math.Min(max.x, TileGridValues.GetLength(0) - 1);
@@ -70,7 +61,7 @@ namespace Project2D.TankGame.Tiles
                     if (TileGridValues[xx, yy] == 1)
                     {
                         //Creates a rect representing the tile
-                        Rectangle TileRect = new Rectangle(xx*CellWidth,yy*CellHeight,CellWidth,CellHeight);
+                        Rectangle TileRect = new Rectangle(xx * CellWidth, yy * CellHeight, CellWidth, CellHeight);
 
                         if (rect.CollidingWith(TileRect))
                         {

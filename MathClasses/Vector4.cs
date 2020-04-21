@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathClasses
 {
@@ -57,18 +53,18 @@ namespace MathClasses
         }
 
         #endregion//End Operators
-        
+
         //Dot product
         public float Dot(Vector4 comp)
         {
-            return ((x * comp.x) + (y * comp.y) + (z * comp.z) + (w *comp.w));
+            return ((x * comp.x) + (y * comp.y) + (z * comp.z) + (w * comp.w));
         }
 
         //Cross
         public Vector4 Cross(Vector4 comp)
         {
-            Vector3 temp = new Vector3(x, y, z).Cross(new Vector3(comp.x,comp.y,comp.z));
-            return new Vector4(temp.x,temp.y,temp.z,0);
+            Vector3 temp = new Vector3(x, y, z).Cross(new Vector3(comp.x, comp.y, comp.z));
+            return new Vector4(temp.x, temp.y, temp.z, 0);
         }
 
         //Magnitude

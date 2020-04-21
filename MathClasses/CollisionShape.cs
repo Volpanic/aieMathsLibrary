@@ -46,13 +46,13 @@ namespace MathClasses
 
             for (int shape = 0; shape < 2; shape++)
             {
-                if(shape == 1)
+                if (shape == 1)
                 {
                     S1 = Shape2;
                     S2 = Shape1;
                 }
 
-                for (var a = 0; a < S1.Points.Count;a++)
+                for (var a = 0; a < S1.Points.Count; a++)
                 {
                     int b = (a + 1) % S1.Points.Count;
                     Vector2 axisProj = new Vector2(-(S1.Points[b].y - S1.Points[a].y), (S1.Points[b].x - S1.Points[a].x));
@@ -60,10 +60,10 @@ namespace MathClasses
                     //Work out min and Max
                     float min_r1 = int.MaxValue;
                     float max_r1 = -int.MaxValue;
-                    for(var p = 0; p < S1.Points.Count; p++)
+                    for (var p = 0; p < S1.Points.Count; p++)
                     {
                         float q = (S1.Points[p].x * axisProj.x + S1.Points[p].y * axisProj.y);
-                        min_r1 = Math.Min(min_r1,q);
+                        min_r1 = Math.Min(min_r1, q);
                         max_r1 = Math.Max(max_r1, q);
                     }
 
@@ -76,12 +76,12 @@ namespace MathClasses
                         max_r2 = Math.Max(max_r2, q);
                     }
 
-                    if(!(max_r2 >= min_r1 && max_r1 >= min_r2))
+                    if (!(max_r2 >= min_r1 && max_r1 >= min_r2))
                     {
                         return false;
                     }
                 }
-               
+
             }
             return true;
         }

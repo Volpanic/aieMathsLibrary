@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathClasses
 {
@@ -38,7 +34,7 @@ namespace MathClasses
         }
 
         //Multiplication F V
-        public static Vector3 operator *(float scale,Vector3 a)
+        public static Vector3 operator *(float scale, Vector3 a)
         {
             return new Vector3(a.x * scale, a.y * scale, a.z * scale);
         }
@@ -67,10 +63,10 @@ namespace MathClasses
         public Vector3 Cross(Vector3 comp)
         {
             float xx = (y * comp.z) - (z * comp.y);
-            float yy = (z * comp.x) - (x *comp.z);
+            float yy = (z * comp.x) - (x * comp.z);
             float zz = (x * comp.y) - (y * comp.x);
 
-            return new Vector3(xx,yy,zz);
+            return new Vector3(xx, yy, zz);
         }
 
         //Magnitude

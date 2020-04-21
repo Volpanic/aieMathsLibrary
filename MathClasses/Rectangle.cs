@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MathClasses
+﻿namespace MathClasses
 {
     public class Rectangle
     {
         public float x = 0;
-        public float y = 0; 
+        public float y = 0;
 
         public float width = 1;
         public float height = 1;
 
-        public float Right { get{ return x + width;} }
+        public float Right { get { return x + width; } }
         public float Bottem { get { return y + height; } }
 
         public Rectangle(Vector2 topLeft, Vector2 size)
