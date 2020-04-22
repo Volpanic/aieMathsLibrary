@@ -55,11 +55,16 @@ namespace MathClasses
             return (byte)(colour);
         }
 
+        public void RedToGreen()
+        {
+            colour = (UInt32)(colour >> 8);
+        }
+
         //Static Colours
         public static Colour White = new Colour(255, 255, 255, 255);
         public static Colour Black = new Colour(0, 0, 0, 0);
         public static Colour Gray = new Colour(24, 34, 42, 255);
-        public static Colour Red = new Colour(24, 34, 16, 255);
+        public static Colour Red = new Colour(255, 34, 16, 255);
 
     }
 }

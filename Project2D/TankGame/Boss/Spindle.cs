@@ -17,8 +17,8 @@ namespace Project2D.TankGame.Boss
 
         //Stats
         bool Rage = false;
-        public int MaxHp = 500;
-        public int HP = 500;
+        public int MaxHp = 300;
+        public int HP = 300;
 
 
         public Spindle(GameScene _gameScene) : base(_gameScene)
@@ -176,7 +176,6 @@ namespace Project2D.TankGame.Boss
 
                     }
 
-
                     break;
                 }
             }
@@ -208,9 +207,16 @@ namespace Project2D.TankGame.Boss
             rl.Rectangle BossHealthFront = BossHealthBack;
             BossHealthFront.width *= ((float)HP / (float)MaxHp);
 
-            DrawRectangleRec(BossHealthBack, Color.DARKGRAY);
-            DrawRectangleRec(BossHealthFront, Color.RED);
-            DrawRectangleLinesEx(BossHealthBack, 1, Color.BLACK);
+            //Make bar transparent when near bar
+            int Alpha = 255;
+            if (gameScene.player.Position.y > Program.GameHeight * 0.8)
+            {
+                Alpha = 64;
+            }
+
+            DrawRectangleRec(BossHealthBack, new Color(Color.DARKGRAY.r, Color.DARKGRAY.g, Color.DARKGRAY.b,Alpha));
+            DrawRectangleRec(BossHealthFront, new Color(Color.RED.r, Color.RED.g, Color.RED.b, Alpha));
+            DrawRectangleLinesEx(BossHealthBack, 1, new Color(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Alpha));
         }
 
         public override void OnDestroy()

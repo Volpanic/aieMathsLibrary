@@ -113,6 +113,7 @@ namespace Project2D.Scenes
                     {
                         //spindleBoss.SpindleHit();
                         SpindleBullets[i].Active = false;
+                        player.HurtPlayer();
                     }
 
                     //Destroy if need to.
@@ -146,8 +147,9 @@ namespace Project2D.Scenes
             }
 
 
-            player.Draw();
+            
             tileGrid.DrawTiles();
+            player.Draw();
             spindleBoss.Draw();
 
             dialougeBox.DrawDialougeBox();

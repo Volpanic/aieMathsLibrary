@@ -49,9 +49,19 @@ namespace Project2D.Scenes
             }
         }
 
+        MathClasses.Colour red = new MathClasses.Colour(255, 0,0xff, 0);
+        bool done = false;
         public override void Draw()
         {
             MenuTimer++;
+
+            if (!done)
+            {
+                done = true;
+                red.RedToGreen();
+                red.SetRed(55);
+            }
+            DrawText($"0x{red.colour:X}",16,16,12,rl.Color.BLACK);
 
             switch (MenuPhase)
             {

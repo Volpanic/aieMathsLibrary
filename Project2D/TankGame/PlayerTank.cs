@@ -24,6 +24,11 @@ namespace Project2D.TankGame
         float BulletTimerMax = 10;
         float TredTimer = 0;
 
+        public int MaxHp = 5;
+        public int HP = 5;
+        public bool BeenHit = false;
+        public float HitTimer = 0;
+
         public Vector2 MousePos { get { return GetRelativeMousePosition(); } }
 
         public PlayerTank(GameScene _gS) : base(_gS)
@@ -183,12 +188,43 @@ namespace Project2D.TankGame
                 actualVel.y = 0;
             }
             Position.y += actualVel.y;
+
+            HitTimer = Numbers.Approach(HitTimer, 0, 1);
+            if(HitTimer == 0)
+            {
+                BeenHit = false;
+            }
         }
 
         public override void Draw()
         {
-            DrawSelf();
-            GunDraw();
+            if (!BeenHit || HitTimer % 5 == 0)
+            {
+                DrawSelf();
+                GunDraw();
+            }
+            
+
+            //Draw HealthBar
+            Rectangle PlayerHealthBack = new Rectangle(8, 8, 96, Program.GameHeight * 0.05f);
+            Rectangle PlayerHealthFront = new Rectangle(PlayerHealthBack.x, PlayerHealthBack.y, PlayerHealthBack.width, PlayerHealthBack.height);
+            HP = (int)Clamp(HP,0,MaxHp);
+            PlayerHealthFront.width *= ((float)HP / (float)MaxHp);
+
+            int Alpha = 255;
+            DrawRectangleRec(MathMore.toRayRect(PlayerHealthBack), new Color(Color.DARKGRAY.r, Color.DARKGRAY.g, Color.DARKGRAY.b, Alpha));
+            DrawRectangleRec(MathMore.toRayRect(PlayerHealthFront), new Color(Color.GREEN.r, Color.GREEN.g, Color.GREEN.b, Alpha));
+            DrawRectangleLinesEx(MathMore.toRayRect(PlayerHealthBack), 1, new Color(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Alpha));
+        }
+
+        public void HurtPlayer()
+        {
+            if(!BeenHit)
+            {
+                BeenHit = true;
+                HP -= 1;
+                HitTimer = 60;
+            }
         }
 
         ////////////////
