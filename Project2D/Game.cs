@@ -26,6 +26,11 @@ namespace Project2D
 
         public Scene CurrentGameScene { get { return currentRunningScene; } set { SetNextScene(value); } }
 
+        //ScreenShake
+        public float ScreenShakeTimer = 0;
+        public int ScreenShakeStrength = 0;
+        public Random Rand = new Random();
+
         public Game()
         {
             currentRunningScene = new TitleScene(this);
@@ -56,7 +61,7 @@ namespace Project2D
             currentRunningScene.EndScene();
         }
 
-        public void Update()
+        public void Update(ref Raylib.Vector2 CameraPos)
         {
             //DeltaTime
             lastTime = currentTime;
@@ -70,8 +75,27 @@ namespace Project2D
             }
             frames++;
 
+            //ScreenShake
+            if(ScreenShakeTimer > 0)
+            {
+                ScreenShakeTimer -= deltaTime;
+
+                CameraPos.x = Rand.Next(-(ScreenShakeStrength), (ScreenShakeStrength-1)) + ((float)Rand.NextDouble()  - .5f);
+                CameraPos.y = Rand.Next(-(ScreenShakeStrength), (ScreenShakeStrength-1)) + ((float)Rand.NextDouble() - .5f);
+            }
+            else // Make sure screens aligned
+            {
+                CameraPos = Raylib.Vector2.Zero;
+            }
+
             //Game Running   
             currentRunningScene.Update();
+        }
+
+        public void ScreenShake(float time, int strength)
+        {
+            ScreenShakeTimer = time;
+            ScreenShakeStrength = strength;
         }
 
         public void Draw()
@@ -90,6 +114,7 @@ namespace Project2D
                 }
                 else
                 {
+                    currentRunningScene.EndScene();
                     currentRunningScene = nextScene;
                     nextScene = null;
                     isTransistioning = false;

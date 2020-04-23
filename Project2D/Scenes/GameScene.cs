@@ -25,6 +25,7 @@ namespace Project2D.Scenes
         Random rand = new Random();
         public Texture2D SnowTexture;
 
+        bool FirstFrame = false;
 
         public GameScene(Game _game) : base(_game)
         {
@@ -67,6 +68,7 @@ namespace Project2D.Scenes
             //Create Dialouge Box, but don't show it
             dialougeBox = new DialougeBox();
             dialougeBox.Visible = false;
+           
         }
 
         public override void EndScene()
@@ -77,11 +79,26 @@ namespace Project2D.Scenes
 
         public override void Update()
         {
+            if(!FirstFrame)
+            {
+                Console.Clear();
+                Console.WriteLine("##~~--  Controls  --~~##");
+                Console.WriteLine("Rotate Tank Right  ~ D");
+                Console.WriteLine("Rotate Tank Left   ~ A");
+                Console.WriteLine("Move Tank Forward  ~ A");
+                Console.WriteLine("Mute Game Music    ~ M");
+                Console.WriteLine("Slow Down Tank     ~ Shift");
+                Console.WriteLine("Aim Tank Gun       ~ Mouse");
+                Console.WriteLine("Shoot Tank Gun     ~ Left Mouse");
+                FirstFrame = true;
+            }
+
             //Update everything unless dialouge box is showing
             if (!dialougeBox.Visible)
             {
                 player.Update();
-                spindleBoss.Update();
+
+                if(spindleBoss.Active) spindleBoss.Update();
 
                 //Roll through Player Bullets updates
                 for (int i = 0; i < PlayerBullets.Count; i++)
@@ -146,11 +163,10 @@ namespace Project2D.Scenes
                 SpindleBullets[i].Draw();
             }
 
-
-            
             tileGrid.DrawTiles();
+
+            if (spindleBoss.Active) spindleBoss.Draw();
             player.Draw();
-            spindleBoss.Draw();
 
             dialougeBox.DrawDialougeBox();
         }

@@ -57,7 +57,12 @@ namespace MathClasses
 
         public void RedToGreen()
         {
-            colour = (UInt32)(colour >> 8);
+            UInt32 newCol = 0;
+            newCol |= (UInt32)(0 << 24);
+            newCol |= (UInt32)(GetRed() << 16);
+            newCol |= (UInt32)(GetBlue() << 8);
+            newCol |= (UInt32)(GetAlpha());
+            colour = newCol;
         }
 
         //Static Colours

@@ -6,7 +6,7 @@ namespace Project2D.Scenes
     public abstract class Scene
     {
 
-        protected Game game;
+        public Game game;
         public Camera2D camera;
         public ParticleSystem partSystem;
 

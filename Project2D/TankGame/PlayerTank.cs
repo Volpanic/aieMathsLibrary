@@ -128,13 +128,13 @@ namespace Project2D.TankGame
             }
 
             //Movement
-            if (KeyForward)
+            if (KeyForward && HP > 0)
             {
                 Velocity = new Vector2((float)Math.Cos(Rotation * DEG2RAD), (float)Math.Sin(Rotation * DEG2RAD));
                 Speed = Numbers.Approach(Speed, MaxSpeed, 0.11f);
             }
 
-            if (KeyBackWard)
+            if (KeyBackWard && HP > 0)
             {
                 Velocity = new Vector2(-(float)Math.Cos(Rotation * DEG2RAD), -(float)Math.Sin(Rotation * DEG2RAD));
                 Speed = Numbers.Approach(Speed, MaxSpeed, 0.11f);
@@ -215,7 +215,30 @@ namespace Project2D.TankGame
             DrawRectangleRec(MathMore.toRayRect(PlayerHealthBack), new Color(Color.DARKGRAY.r, Color.DARKGRAY.g, Color.DARKGRAY.b, Alpha));
             DrawRectangleRec(MathMore.toRayRect(PlayerHealthFront), new Color(Color.GREEN.r, Color.GREEN.g, Color.GREEN.b, Alpha));
             DrawRectangleLinesEx(MathMore.toRayRect(PlayerHealthBack), 1, new Color(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Alpha));
+
+            //Draw Dead Text
+            if(HP <= 0)
+            {
+                DeadTimer++;
+                Vector2 Pos = new Vector2(Program.GameWidth / 2, Program.GameHeight / 2);
+
+                DrawRectangleRec(MathMore.toRayRect(new Rectangle(0, Pos.y - 8, Program.GameWidth, 16)), Color.BLACK);
+
+                if (DeadTimer % 20 > 5)
+                {
+                    Raylib.Vector2 Measure = MeasureTextEx(Program.Romulus, "Dead", 12, 1);
+                    DrawTextEx(Program.Romulus, "Dead", new Raylib.Vector2(Pos.x - (Measure.x / 2), Pos.y - (Measure.y / 2)), 12, 1, Color.WHITE);
+                }
+
+                if(!HasDied && DeadTimer > 60)
+                {
+                    gameScene.game.CurrentGameScene = new GameScene(gameScene.game);
+                    HasDied = true;
+                }
+            }
         }
+        int DeadTimer = 0;
+        bool HasDied = false;
 
         public void HurtPlayer()
         {
@@ -224,6 +247,12 @@ namespace Project2D.TankGame
                 BeenHit = true;
                 HP -= 1;
                 HitTimer = 60;
+                gameScene.game.ScreenShake(30,1);
+            }
+
+            if(HP <= 0)
+            {
+                
             }
         }
 
@@ -241,7 +270,7 @@ namespace Project2D.TankGame
             BulletTimer += Game.deltaTime;
 
             //Shoot
-            if (BulletTimer >= BulletTimerMax && BulletShoot)
+            if (HP > 0 && BulletTimer >= BulletTimerMax && BulletShoot)
             {
                 BulletTimer = BulletTimer % BulletTimerMax;
 

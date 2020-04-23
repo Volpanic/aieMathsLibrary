@@ -9,7 +9,7 @@ namespace Project2D.TankGame
     {
         public Vector2 Velocity = new Vector2();
 
-        private int MaxLifeTime = 120;
+        private int MaxLifeTime = 140;
         private float LifeTimer = 0;
 
         public SpindleBullet(GameScene _gS, Texture2D _sprite) : base(_gS)

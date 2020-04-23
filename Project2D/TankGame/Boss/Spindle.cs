@@ -51,6 +51,28 @@ namespace Project2D.TankGame.Boss
                     Attacks();
                     break;
                 }
+
+                case 2: // Death
+                {
+                    Timer += Game.deltaTime;
+
+                    Rotation += Timer / 5.0f;
+
+                    if(Timer >=  120)
+                    {
+                        Scale.x = Lerp(Scale.x,0,0.08f);
+                        Scale.y = Lerp(Scale.y, 0, 0.08f);
+
+                        if(Scale.x == 0)
+                        {
+                            gameScene.dialougeBox.Visible = true;
+                            gameScene.dialougeBox.Messages.Add("You won, but i didn't make anything happen other than this.");
+                            Active = false;
+                        }
+                    }
+
+                    break;
+                }
             }
         }
 
@@ -83,7 +105,7 @@ namespace Project2D.TankGame.Boss
                 case 1: // 4 Way Shot 
                 {
                     Rotation += (float)(Math.PI * 1f) * Game.deltaTime;
-                    if (Timer > 15)
+                    if (Timer > (Rage? 10 : 15))
                     {
                         Shoot4Way(1);
                         Timer = 0;
@@ -101,12 +123,13 @@ namespace Project2D.TankGame.Boss
                 case 2: // ShotGun
                 {
                     Rotation = Lerp(Rotation, MathClasses.Vector2.Direction(Position, gameScene.player.Position) * RAD2DEG, 0.08f);
-                    if (Timer > 60)
+                    if (Timer > (Rage ? 30 : 60))
                     {
                         for (int i = 0; i < rand.Next(6, 12); i++)
                         {
-                            ShootBullet(Position, Rotation + rand.Next(-15, 15),(float)(rand.NextDouble() + rand.Next(2, 5)));
+                            ShootBullet(Position, Rotation + rand.Next(-8, 8),(float)(rand.NextDouble() + rand.Next(2, 5)));
                         }
+                        gameScene.game.ScreenShake(10,2);
                         Timer = 0;
                         SubTimer++;
                     }
@@ -122,14 +145,14 @@ namespace Project2D.TankGame.Boss
                 case 3: // SinWaveMove
                 {
                     Rotation = Numbers.SinWave(-180, 180, 1, 0, Timer + (SubTimer * 15));
-                    if (Timer > 15)
+                    if (Timer > (Rage ? 10 : 15))
                     {
                         Shoot4Way(1);
                         Timer = 0;
                         SubTimer++;
                     }
 
-                    if (SubTimer >= 8)
+                    if (SubTimer >= 16)
                     {
                         ChangePhase();
                     }
@@ -145,6 +168,11 @@ namespace Project2D.TankGame.Boss
                         if (Rotation == 0)
                         {
                             ShootBullet(Position, Rotation, 2);
+
+                            if(Rage)
+                            {
+                                ShootBullet(Position, Rotation + 180, 2);
+                            }
 
                             SubTimer = 1;
                             Timer = 0;
@@ -162,11 +190,16 @@ namespace Project2D.TankGame.Boss
 
                     if (SubTimer == 2) // Shoot stream
                     {
-                        Rotation += (float)Math.PI; // It's in degrees, just pies a nice number i guess
+                        Rotation += (float)Math.PI + (Timer / 10); // It's in degrees, just pies a nice number i guess
 
-                        if(Timer % 20 > 0 && Timer % 20 < 15)
+                        if(Timer % 20 > 0 && Timer % 20 < 10)
                         {
                             ShootBullet(Position, Rotation, 2);
+
+                            if (Rage)
+                            {
+                                ShootBullet(Position, Rotation + 180, 2);
+                            }
                         }
 
                         if (Timer > 240)
@@ -245,9 +278,21 @@ namespace Project2D.TankGame.Boss
                 gameScene.dialougeBox.Messages.Add("BOSS PROTOCOL BEGIN/0.");
                 State = 1;
             }
-            else
+            else if(State == 1)
             {
                 HP -= 1;
+
+                if(HP < (MaxHp/2))
+                {
+                    Rage = true;
+                }
+
+                if (HP <= 0)
+                {
+                    Timer = 0;
+                    SubTimer = 0;
+                    State = 2;
+                }
             }
         }
     }

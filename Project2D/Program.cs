@@ -1,7 +1,9 @@
 ﻿using MathClasses;
+using System;
 using Project2D.TankGame;
 using Raylib;
 using static Raylib.Raylib;
+using System.IO;
 
 namespace Project2D
 {
@@ -28,33 +30,63 @@ namespace Project2D
             //load
             Romulus = LoadFont("resources/fonts/romulus.png");
             InitAudioDevice();
+
+            //Camera for screenshake
+            Camera2D camera = new Camera2D();
+            camera.zoom = 1;
+
+            //Music
+            IntPtr GameMusic = LoadMusicStream("Resources/Audio/mus_boss.ogg");
+            //PlayMusicStream(GameMusic);
+            bool MusicMuted = false;
             game.Init();
+
+            Random Rand = new Random();
 
             while (!WindowShouldClose())
             {
+                //Music
+                UpdateMusicStream(GameMusic);
 
-                game.Update();
+                if(IsKeyPressed(KeyboardKey.KEY_M))
+                {
+                    if (MusicMuted)
+                    {
+                        ResumeMusicStream(GameMusic);
+                    }
+                    else
+                    {
+                        MusicMuted = true;
+                        PauseMusicStream(GameMusic);
+                    }
+                }
+
+                game.Update(ref camera.offset);
 
                 //Draw Scaled Window
                 BeginDrawing();
-
+  
                 BeginTextureMode(AppSurface);
+                BeginMode2D(camera);
 
-                ClearBackground(MathMore.toRayColour(new Colour(255, 255, 255, 1)));
+                //ClearBackground(MathMore.toRayColour(new Colour(255, 255, 255, 1)));
                 ClearBackground(Color.WHITE);
 
                 game.Draw();
 
                 EndTextureMode();
+
                 //Draw Scaled Window
                 DrawRenderTexture(AppSurface);
                 EndMode2D();
-
+                
                 EndDrawing();
             }
 
             //unload
             UnloadFont(Romulus);
+            StopMusicStream(GameMusic);
+            UnloadMusicStream(GameMusic);
             CloseAudioDevice();
             game.Shutdown();
 
