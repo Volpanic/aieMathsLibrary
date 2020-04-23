@@ -127,7 +127,7 @@ namespace Project2D.TankGame.Boss
                     {
                         for (int i = 0; i < rand.Next(6, 12); i++)
                         {
-                            ShootBullet(Position, Rotation + rand.Next(-8, 8),(float)(rand.NextDouble() + rand.Next(2, 5)));
+                            ShootBullet(Position, Rotation + rand.Next(-8, 8),(float)(rand.NextDouble() + rand.Next(2, 3)));
                         }
                         gameScene.game.ScreenShake(10,2);
                         Timer = 0;
@@ -192,7 +192,7 @@ namespace Project2D.TankGame.Boss
                     {
                         Rotation += (float)Math.PI + (Timer / 10); // It's in degrees, just pies a nice number i guess
 
-                        if(Timer % 20 > 0 && Timer % 20 < 10)
+                        if(Timer % 20 > 0 && Timer % 20 < 5)
                         {
                             ShootBullet(Position, Rotation, 2);
 
@@ -228,6 +228,7 @@ namespace Project2D.TankGame.Boss
             SpindleBullet sb = new SpindleBullet(gameScene, BulletSprite);
             sb.Position = NewPosition;
             sb.Velocity = new MathClasses.Vector2((float)Math.Cos((DegreeRotation ) * DEG2RAD), (float)Math.Sin((DegreeRotation) * DEG2RAD)) * Speed;
+            sb.Rotation = DegreeRotation;
             gameScene.SpindleBullets.Add(sb);
         }
 

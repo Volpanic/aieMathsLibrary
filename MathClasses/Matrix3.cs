@@ -117,5 +117,18 @@ namespace MathClasses
                 0, 0, 1);
         }
 
+        public void SetTranslation(float x,float y, float z)
+        {
+            m1 = x;
+            m2 = y;
+            m3 = z;
+        }
+
+        public void Translate(float x, float y, float z)
+        {
+            m1 = x;
+            m2 = y;
+            m3 = z;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Raylib;
+using static Raylib.Raylib;
 
 namespace Project2D.TankGame
 {
@@ -59,8 +60,6 @@ namespace Project2D.TankGame
         {
             DrawSelf();
         }
-
-
 
     }
 }
