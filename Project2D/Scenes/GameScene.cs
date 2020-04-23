@@ -106,7 +106,7 @@ namespace Project2D.Scenes
                     PlayerBullets[i].Update();
 
                     //Hurt Boss
-                    if (PlayerBullets[i].GetCollisionRectangle().CollidingWith(spindleBoss.GetCollisionRectangle()))
+                    if (spindleBoss.Active && PlayerBullets[i].GetCollisionRectangle().CollidingWith(spindleBoss.GetCollisionRectangle()))
                     {
                         spindleBoss.SpindleHit();
                         PlayerBullets[i].Active = false;
@@ -123,6 +123,7 @@ namespace Project2D.Scenes
                 //Loop spindle bullets (Boss Bullets)
                 for (int i = 0; i < SpindleBullets.Count; i++)
                 {
+                   
                     SpindleBullets[i].Update();
 
                     //Hurt Boss

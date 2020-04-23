@@ -49,6 +49,8 @@ namespace Project2D.TankGame
                     LetterCount = 0;
                     if (CurrentMessage >= Messages.Count)
                     {
+                        Messages.Clear();
+                        CurrentMessage = 0;
                         Visible = false;
                     }
                 }

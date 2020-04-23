@@ -31,6 +31,9 @@ namespace Project2D
             Romulus = LoadFont("resources/fonts/romulus.png");
             InitAudioDevice();
 
+            //Load All sprites at runtime
+            Sprites.InitSprites();
+
             //Camera for screenshake
             Camera2D camera = new Camera2D();
             camera.zoom = 1;
@@ -88,6 +91,7 @@ namespace Project2D
             StopMusicStream(GameMusic);
             UnloadMusicStream(GameMusic);
             CloseAudioDevice();
+            Sprites.UnloadTextures();
             game.Shutdown();
 
             CloseWindow();

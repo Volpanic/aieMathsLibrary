@@ -46,22 +46,15 @@ namespace Project2D.TankGame
         public override void Create()
         {
             //Load Sprites
-            Sprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_tank.png")); // Set to tank sprite
+            Sprite = Sprites.GetSprite("spr_tank"); // Set to tank sprite
             Dimensions = new Vector2(Sprite.width, Sprite.height); // Sets sprite width and height
             Origin = Dimensions / 2; // Centers the sprite
-            TredSprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_tred.png"));
+            TredSprite = Sprites.GetSprite("spr_tred");
 
             //Gun Stuff
-            GunSprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_tank_gun.png")); // Load Gun Sprite
+            GunSprite = Sprites.GetSprite("spr_tank_gun"); // Load Gun Sprite
             GunOrigin = new Vector2(2, 3); //Set origin 
 
-        }
-
-        public override void OnDestroy()
-        {
-            UnloadTexture(Sprite);
-            UnloadTexture(GunSprite);
-            UnloadTexture(TredSprite);
         }
 
         public override void Update()
@@ -203,7 +196,6 @@ namespace Project2D.TankGame
                 DrawSelf();
                 GunDraw();
             }
-            
 
             //Draw HealthBar
             Rectangle PlayerHealthBack = new Rectangle(8, 8, 96, Program.GameHeight * 0.05f);

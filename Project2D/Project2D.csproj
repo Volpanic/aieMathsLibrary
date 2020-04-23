@@ -61,6 +61,7 @@
     <Compile Include="Scenes\Scene.cs" />
     <Compile Include="Scenes\TitleScene.cs" />
     <Compile Include="Service.cs" />
+    <Compile Include="TankGame\Sprites.cs" />
     <Compile Include="TankGame\Tiles\TileGrid.cs" />
   </ItemGroup>
   <ItemGroup>

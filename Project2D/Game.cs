@@ -80,8 +80,8 @@ namespace Project2D
             {
                 ScreenShakeTimer -= deltaTime;
 
-                CameraPos.x = Rand.Next(-(ScreenShakeStrength), (ScreenShakeStrength-1)) + ((float)Rand.NextDouble()  - .5f);
-                CameraPos.y = Rand.Next(-(ScreenShakeStrength), (ScreenShakeStrength-1)) + ((float)Rand.NextDouble() - .5f);
+                CameraPos.x = (Rand.Next(-ScreenShakeStrength, ScreenShakeStrength));
+                CameraPos.y = (Rand.Next(-ScreenShakeStrength, ScreenShakeStrength));
             }
             else // Make sure screens aligned
             {

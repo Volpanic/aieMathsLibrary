@@ -24,13 +24,13 @@ namespace Project2D.TankGame.Boss
         public Spindle(GameScene _gameScene) : base(_gameScene)
         {
             //Load Texture for bullet
-            BulletSprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_spin_bullet.png"));
+            BulletSprite = Sprites.GetSprite("spr_spin_bullet");
         }
 
         public override void Create()
         {
             //Load Sprites
-            Sprite = LoadTexture(Path.Combine("Resources", "Sprites", "spr_spindle.png"));
+            Sprite = Sprites.GetSprite("spr_spindle");
             Dimensions = new MathClasses.Vector2(Sprite.width, Sprite.height);
             Origin = Dimensions / 2;
             Position = new MathClasses.Vector2(Program.GameWidth / 2, Program.GameHeight / 2);
@@ -63,7 +63,7 @@ namespace Project2D.TankGame.Boss
                         Scale.x = Lerp(Scale.x,0,0.08f);
                         Scale.y = Lerp(Scale.y, 0, 0.08f);
 
-                        if(Scale.x == 0)
+                        if(Scale.x <= 0.1f)
                         {
                             gameScene.dialougeBox.Visible = true;
                             gameScene.dialougeBox.Messages.Add("You won, but i didn't make anything happen other than this.");
@@ -144,10 +144,10 @@ namespace Project2D.TankGame.Boss
 
                 case 3: // SinWaveMove
                 {
-                    Rotation = Numbers.SinWave(-180, 180, 1, 0, Timer + (SubTimer * 15));
-                    if (Timer > (Rage ? 10 : 15))
+                    Rotation = Numbers.SinWave(-15, 15, 1, 0, Timer + (SubTimer * 15));
+                    if (Timer > (Rage ? 4 : 8))
                     {
-                        Shoot4Way(1);
+                        Shoot4Way(1f);
                         Timer = 0;
                         SubTimer++;
                     }
@@ -192,13 +192,13 @@ namespace Project2D.TankGame.Boss
                     {
                         Rotation += (float)Math.PI + (Timer / 10); // It's in degrees, just pies a nice number i guess
 
-                        if(Timer % 20 > 0 && Timer % 20 < 5)
+                        if(Timer % 10 > 0 && Timer % 10 < 3)
                         {
-                            ShootBullet(Position, Rotation, 2);
+                            ShootBullet(Position, Rotation, 1);
 
                             if (Rage)
                             {
-                                ShootBullet(Position, Rotation + 180, 2);
+                                ShootBullet(Position, Rotation + 180, 1);
                             }
                         }
 
@@ -251,12 +251,6 @@ namespace Project2D.TankGame.Boss
             DrawRectangleRec(BossHealthBack, new Color(Color.DARKGRAY.r, Color.DARKGRAY.g, Color.DARKGRAY.b,Alpha));
             DrawRectangleRec(BossHealthFront, new Color(Color.RED.r, Color.RED.g, Color.RED.b, Alpha));
             DrawRectangleLinesEx(BossHealthBack, 1, new Color(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Alpha));
-        }
-
-        public override void OnDestroy()
-        {
-            UnloadTexture(Sprite);
-            UnloadTexture(BulletSprite);
         }
 
         public void ChangePhase()
