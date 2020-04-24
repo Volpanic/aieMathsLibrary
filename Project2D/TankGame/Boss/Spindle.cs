@@ -1,5 +1,6 @@
 ﻿using MathClasses;
 using Project2D.Scenes;
+using Project2D.TankGame.Particles;
 using Raylib;
 using System;
 using System.IO;
@@ -68,6 +69,14 @@ namespace Project2D.TankGame.Boss
                             gameScene.dialougeBox.Visible = true;
                             gameScene.dialougeBox.Messages.Add("You won, but i didn't make anything happen other than this.");
                             Active = false;
+                        }
+                    }
+                    else
+                    {
+                        if(rand.Next(0,100) > 75)
+                        {
+                            Particle redpart = new Particle(gameScene, Sprites.GetSprite("spr_red_particle"), MathClasses.Vector2.Zero,MathClasses.Vector2.Zero, 0, true, 120);
+                            gameScene.partSystem.AddParticleCircleSpeed(redpart, Position, 1, 0, 16,Rotation);
                         }
                     }
 

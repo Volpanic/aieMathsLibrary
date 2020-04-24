@@ -80,6 +80,9 @@
     <Content Include="Resources\Fonts\romulus.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Sprites\spr_red_particle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sprites\spr_snow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

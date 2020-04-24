@@ -115,6 +115,7 @@ namespace Project2D.Scenes
                     //Destroy if need to.
                     if (PlayerBullets[i].Active == false)
                     {
+                        PlayerBullets[i].OnDestroy();
                         PlayerBullets.RemoveAt(i);
                         i--;
                     }
@@ -132,11 +133,14 @@ namespace Project2D.Scenes
                         //spindleBoss.SpindleHit();
                         SpindleBullets[i].Active = false;
                         player.HurtPlayer();
+
+
                     }
 
                     //Destroy if need to.
                     if (SpindleBullets[i].Active == false)
                     {
+                        SpindleBullets[i].OnDestroy();
                         SpindleBullets.RemoveAt(i);
                         i--;
                     }

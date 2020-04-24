@@ -74,8 +74,8 @@ namespace Project2D.TankGame
                     Vector2 tred2 = new Vector2((-4) * (float)Math.Cos(Rotation), (-4) * (float)Math.Sin(Rotation));
                     tred1 += Position;
                     tred2 += Position;
-                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred1, Vector2.Zero, Rotation, true, 60));
-                    gameScene.partSystem.PartList.Add(new Particle(gameScene, TredSprite, tred2, Vector2.Zero, Rotation, true, 60));
+                    gameScene.partSystem.AddParticle(new Particle(gameScene, TredSprite, tred1, Vector2.Zero, Rotation, true, 60));
+                    gameScene.partSystem.AddParticle(new Particle(gameScene, TredSprite, tred2, Vector2.Zero, Rotation, true, 60));
                 }
             }
 
@@ -240,6 +240,9 @@ namespace Project2D.TankGame
                 HP -= 1;
                 HitTimer = 60;
                 gameScene.game.ScreenShake(30,1);
+
+                Particle redpart = new Particle(gameScene, Sprites.GetSprite("spr_red_particle"), Vector2.Zero,Vector2.Zero, 0, true, 30);
+                gameScene.partSystem.AddParticleCircleSpeed(redpart, Position, 0.5f, 0, 8);
             }
 
             if(HP <= 0)

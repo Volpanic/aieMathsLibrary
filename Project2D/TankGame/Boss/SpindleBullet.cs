@@ -5,6 +5,8 @@ namespace Project2D.TankGame
 {
     using MathClasses;
     using Project2D.Scenes;
+    using Project2D.TankGame.Particles;
+    using System;
 
     public class SpindleBullet : Component
     {

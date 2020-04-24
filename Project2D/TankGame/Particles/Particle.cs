@@ -35,6 +35,11 @@ namespace Project2D.TankGame.Particles
 
         }
 
+        public virtual Particle Clone()
+        {
+            return new Particle(gameScene, Sprite, Position, Velocity, Rotation, Fade, MaxParticleLife, AnimationTime);
+        }
+
         public override void Draw()
         {
             //Draw and Update particles (Update in draw, because)
