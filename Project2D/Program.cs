@@ -20,14 +20,14 @@ namespace Project2D
         {
             Game game = new Game();
 
-            InitWindow(GameWidth * GameZoom, GameHeight * GameZoom, "...");
+            InitWindow(GameWidth * GameZoom, GameHeight * GameZoom, "Tnk");
             SetTargetFPS(60);
 
             //Creates a base surface to draw the game too, Scaled up later
             RenderTexture2D AppSurface = LoadRenderTexture(GameWidth, GameHeight);
             SetTextureFilter(AppSurface.texture, TextureFilterMode.FILTER_POINT);
 
-            //load
+            //Load
             Romulus = LoadFont("resources/fonts/romulus.png");
             InitAudioDevice();
 
@@ -40,7 +40,7 @@ namespace Project2D
 
             //Music
             IntPtr GameMusic = LoadMusicStream("Resources/Audio/mus_boss.ogg");
-            //PlayMusicStream(GameMusic);
+            PlayMusicStream(GameMusic);
             bool MusicMuted = false;
             game.Init();
 
@@ -87,6 +87,7 @@ namespace Project2D
             }
 
             //unload
+            UnloadRenderTexture(AppSurface);
             UnloadFont(Romulus);
             StopMusicStream(GameMusic);
             UnloadMusicStream(GameMusic);

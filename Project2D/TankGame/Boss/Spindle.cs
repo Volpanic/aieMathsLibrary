@@ -260,6 +260,12 @@ namespace Project2D.TankGame.Boss
             DrawRectangleRec(BossHealthBack, new Color(Color.DARKGRAY.r, Color.DARKGRAY.g, Color.DARKGRAY.b,Alpha));
             DrawRectangleRec(BossHealthFront, new Color(Color.RED.r, Color.RED.g, Color.RED.b, Alpha));
             DrawRectangleLinesEx(BossHealthBack, 1, new Color(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Alpha));
+
+            //Cursed, uncomment this and see what happens
+
+            //rl.Vector2 LineTop = new rl.Vector2(BossHealthFront.x + BossHealthFront.width, BossHealthFront.y);
+            //rl.Vector2 LineBottom = new rl.Vector2(BossHealthFront.x + BossHealthFront.width, BossHealthFront.y + BossHealthFront.height);
+            //DrawLineV(LineTop, LineBottom, Color.WHITE);
         }
 
         public void ChangePhase()

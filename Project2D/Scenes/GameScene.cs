@@ -86,6 +86,7 @@ namespace Project2D.Scenes
                 Console.WriteLine("Rotate Tank Right  ~ D");
                 Console.WriteLine("Rotate Tank Left   ~ A");
                 Console.WriteLine("Move Tank Forward  ~ A");
+                Console.WriteLine("Move Tank Backward ~ X");
                 Console.WriteLine("Mute Game Music    ~ M");
                 Console.WriteLine("Slow Down Tank     ~ Shift");
                 Console.WriteLine("Aim Tank Gun       ~ Mouse");
