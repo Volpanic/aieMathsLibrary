@@ -17,7 +17,7 @@ namespace MathClasses
 
         public void SetRed(byte newRed)
         {
-            colour |= (UInt32)(newRed << 24);
+            colour = (colour & 0x00FFFFFF) | ((UInt32)newRed << 24);
         }
 
         public byte GetRed()
@@ -27,7 +27,7 @@ namespace MathClasses
 
         public void SetGreen(byte newGreen)
         {
-            colour |= (UInt32)(newGreen << 16);
+            colour = (colour & 0xFF00FFFF) | ((UInt32)newGreen << 16);
         }
 
         public byte GetGreen()
@@ -37,7 +37,7 @@ namespace MathClasses
 
         public void SetBlue(byte newBlue)
         {
-            colour |= (UInt32)(newBlue << 8);
+            colour = (colour & 0xFFFF00FF) | ((UInt32)newBlue << 8);
         }
 
         public byte GetBlue()
@@ -47,7 +47,7 @@ namespace MathClasses
 
         public void SetAlpha(byte newAlpha)
         {
-            colour |= (UInt32)(newAlpha);
+            colour = (colour & 0xFFFFFF00) | ((UInt32)newAlpha);
         }
 
         public byte GetAlpha()
@@ -57,12 +57,8 @@ namespace MathClasses
 
         public void RedToGreen()
         {
-            UInt32 newCol = 0;
-            newCol |= (UInt32)(0 << 24);
-            newCol |= (UInt32)(GetRed() << 16);
-            newCol |= (UInt32)(GetBlue() << 8);
-            newCol |= (UInt32)(GetAlpha());
-            colour = newCol;
+            SetGreen(GetRed());
+            SetRed(0);
         }
 
         //Static Colours
